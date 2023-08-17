@@ -4,11 +4,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'burgundy': '#800020'
+        'burgundy': '#5B0016',
+        'creme': '#ECDADF'
       }
     },
     fontFamily: {
-      header: ['"Playfair Display"', 'sans-serif']
+      title: ['"Playfair Display"', 'sans-serif'],
+      main: ['"Cormorant Garamond"', 'sans-serif']
     }
   },
   plugins: [],
