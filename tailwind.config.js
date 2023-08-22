@@ -4,8 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'burgundy': '#5B0016',
-        'creme': '#ECDADF'
+        'main': '#5B0016',
+        'background': '#EAE0D5',
+        'active': '#22333B'
       }
     },
     fontFamily: {
