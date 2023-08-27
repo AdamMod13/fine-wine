@@ -17,8 +17,9 @@ module.exports = {
     extend: {
       colors: {
         'main': '#5B0016',
-        'background': '#EAE0D5',
-        'active': '#22333B'
+        'background': '#E9DCCD',
+        'darker-background': '#242223',
+        'active': '#36384C'
       }
     },
     fontFamily: {
