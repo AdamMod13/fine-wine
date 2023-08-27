@@ -7,6 +7,13 @@ import {NgHeroiconsModule} from "@dimaslz/ng-heroicons";
 import {WineCarouselComponent} from './main-page/wine-carousel/wine-carousel.component';
 import {NgOptimizedImage} from "@angular/common";
 import {MainPageComponent} from './main-page/main-page.component';
+import {StoreModule} from '@ngrx/store';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import * as fromApp from '../app/store/app.reducer';
+import {MainPageEffects} from "./main-page/store/main-page.effects";
+import {EffectsModule} from "@ngrx/effects";
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -17,8 +24,13 @@ import {MainPageComponent} from './main-page/main-page.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    HttpClientModule,
     NgHeroiconsModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    StoreRouterConnectingModule.forRoot(),
+    StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([MainPageEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]
