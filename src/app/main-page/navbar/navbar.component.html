@@ -7,14 +7,36 @@
       FineWine
     </h1>
     <ul class="flex flex-row flex-nowrap text-center justify-center space-x-20 w-1/3">
-      <a href="#">RECOMMEND</a>
-      <a href="#">FIND</a>
-      <a href="#">LEARN MORE</a>
+      <a class="relative group px-1" href="#">
+        <span>RECOMMEND</span>
+        <span
+          class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+        <span
+          class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+      </a>
+      <a class="relative group px-1" href="#">
+        <span>FIND</span>
+        <span
+          class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+        <span
+          class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+      </a>
+      <a class="relative group px-1" href="#">
+        <span>LEARN MORE</span>
+        <span
+          class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+        <span
+          class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+      </a>
     </ul>
     <div class="flex w-1/3 justify-end">
       <div *ngIf="true; else isLoggedIn" class="flex flex-row space-x-12">
-        <button>
-          LOGIN
+        <button class="relative group px-1">
+          <span>LOGIN</span>
+          <span
+            class="absolute bottom-1 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+          <span
+            class="absolute bottom-1 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
         </button>
         <button class="bg-main py-3 px-4">
           SIGN IN
