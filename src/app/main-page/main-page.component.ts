@@ -23,6 +23,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
       .pipe(map((mainPageState) => mainPageState.bestRandomWines))
       .subscribe((wines: Wine[]) => {
         this.bestRandomWines = wines;
+        console.log(wines)
       })
   }
 

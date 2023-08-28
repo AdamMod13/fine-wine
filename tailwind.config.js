@@ -16,11 +16,12 @@ module.exports = {
     },
     extend: {
       colors: {
-        'main': '#5B0016',
-        'background': '#E9DCCD',
-        'darker-background': '#242223',
-        'active': '#36384C'
-      }
+        'main': '#5C001E',
+        'light-bg': '#eae8e8',
+        'dark-bg': '#1b1b1b',
+        'dark': '#262120',
+        'light': '#fcfcfc'
+      },
     },
     fontFamily: {
       playfair: ['"Playfair Display"', 'sans-serif'],
