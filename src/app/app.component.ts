@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {initFlowbite} from "flowbite";
 import {Store} from "@ngrx/store";
 import * as fromApp from "./store/app.reducer";
-import * as MainPageActions from "./main-page/store/main-page.action";
 
 @Component({
   selector: 'app-root',
@@ -16,8 +14,5 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new MainPageActions.FetchBestRandomWines());
-
-    initFlowbite();
   }
 }
