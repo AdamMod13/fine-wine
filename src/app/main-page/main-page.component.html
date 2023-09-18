@@ -68,7 +68,7 @@
 <div class="bg-light-bg pb-24 pt-16">
   <div class="m-auto max-w-screen-2xl px-24 flex flex-row justify-between space-x-6 items-center">
     <div *ngFor="let wine of bestRandomWines; let i = index"
-         class="w-1/4 pt-3 shadow-md rounded-xl h-[22rem] bg-light flex flex-col justify-between relative">
+         class="w-1/4 pt-3 shadow-md rounded-xl h-[24rem] bg-light flex flex-col justify-between relative">
       <heart-outline-icon class="absolute top-3 right-3"></heart-outline-icon>
       <img [src]="'./assets/Images/' + wine.wineColor + '_wine.png'" alt="..."
            class="h-2/6 object-contain m-3"/>
@@ -123,11 +123,11 @@
   </div>
 </div>
 <div class="h-[26rem] w-full bg-wineRack bg-cover relative">
-  <div class="absolute z-10 top-0 left-0 h-[26rem] w-full bg-black opacity-70"></div>
+  <div class="absolute z-0 top-0 left-0 h-[26rem] w-full bg-black opacity-70"></div>
   <div class="h-full flex flex-col max-w-screen-2xl justify-center items-center w-1/2 m-auto text-light-bg">
-    <h1 class="text-3xl z-20 font-semibold font-playfair drop-shadow-lg text-center">LEARN EVERYTHING ABOUT WINE</h1>
-    <div class="w-1/4 my-5 z-20 h-1 bg-main"></div>
-    <p class="text-center text-sm z-20 text-light-bg">Lorem ipsum dolor sit amet, consectetur adipiscin elit, sed
+    <h1 class="text-3xl z-10 font-semibold font-playfair drop-shadow-lg text-center">LEARN EVERYTHING ABOUT WINE</h1>
+    <div class="w-1/4 my-5 z-10 h-1 bg-main"></div>
+    <p class="text-center text-sm z-10 text-light-bg">Lorem ipsum dolor sit amet, consectetur adipiscin elit, sed
       do
       eiusmod
       tempor

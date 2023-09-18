@@ -7,7 +7,6 @@ import {Event, NavigationStart, Router} from "@angular/router";
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-
   public isMainPage: boolean;
 
   constructor(private router: Router) {
