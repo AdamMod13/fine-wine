@@ -11,7 +11,7 @@ import * as fromApp from '../app/store/app.reducer';
 import {MainPageEffects} from "./main-page/store/main-page.effects";
 import {EffectsModule} from "@ngrx/effects";
 import {HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
@@ -29,6 +29,7 @@ import {AppRoutingModule} from "./app-routing.module";
     StoreRouterConnectingModule.forRoot(),
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([MainPageEffects]),
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
