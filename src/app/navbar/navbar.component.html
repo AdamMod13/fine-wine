@@ -128,22 +128,6 @@
               </div>
             </div>
           </div>
-          <div class="py-2 space-y-6">
-            <div class="w-full flex flex-row justify-between items-center">
-              <span class="w-2/5 h-[0.5px] bg-gray-300"></span>
-              <h3 class="font-playfair text-lg font-semibold w-1/5 text-center">Maximum Price</h3>
-              <span class="w-2/5 h-[0.5px] bg-gray-300"></span>
-            </div>
-            <div *ngIf="showRecommendationModal" class="flex flex-col justify-center items-center w-full px-6">
-              <input id="maxPrice" formControlName="maxPrice" type="range" min="1" max="50" step="1" value="15"
-                     class="shadow-2xl"/>
-              <div
-                class="flex flex-row font-cormorant text-2xl font-semibold w-full justify-between items-center">
-                <h1>1$</h1>
-                <h1>{{ recommendationForm.get('maxPrice')?.value }}$</h1>
-              </div>
-            </div>
-          </div>
           <div class="py-2">
             <div class="w-full flex flex-row justify-between items-center">
               <span class="w-2/5 h-[0.5px] bg-gray-300"></span>
@@ -191,6 +175,68 @@
               </div>
             </div>
           </div>
+          <div class="py-2 space-y-6">
+            <div class="w-full flex flex-row justify-between items-center">
+              <span class="w-2/6 h-[0.5px] bg-gray-300"></span>
+              <h3 class="font-playfair text-lg font-semibold w-2/6 text-center">Price &nbsp;&&nbsp; Winery &nbsp;&&nbsp;
+                Variety</h3>
+              <span class="w-2/6 h-[0.5px] bg-gray-300"></span>
+            </div>
+            <div class="flex flex-row justify-between items-center px-6 font-playfair">
+              <div class="relative" data-te-input-wrapper-init>
+                <input
+                  type="number"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                  id="maxPriceInput"
+                  formControlName="maxPrice"
+                />
+                <label
+                  for="maxPriceInput"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                >Maximum Price
+                </label>
+              </div>
+              <div>
+                <select
+                  data-te-select-init
+                  multiple
+                  data-te-select-size="lg"
+                  data-te-select-filter="true"
+                  formControlName="winery"
+                  class="font-playfair"
+                >
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                  <option value="4">Four</option>
+                  <option value="5">Five</option>
+                  <option value="6">Six</option>
+                  <option value="7">Seven</option>
+                  <option value="8">Eight</option>
+                </select>
+                <label data-te-select-label-ref>Winery</label>
+              </div>
+              <div>
+                <select
+                  data-te-select-init
+                  multiple
+                  data-te-select-size="lg"
+                  data-te-select-filter="true"
+                  formControlName="variety"
+                >
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                  <option value="4">Four</option>
+                  <option value="5">Five</option>
+                  <option value="6">Six</option>
+                  <option value="7">Seven</option>
+                  <option value="8">Eight</option>
+                </select>
+                <label data-te-select-label-ref>Variety</label>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="w-full flex justify-between items-center px-6 pt-4 space-y-6">
           <button (click)="clearForm()">
@@ -199,20 +245,12 @@
               CLEAR
             </h6>
           </button>
-          <button *ngIf="isFirstFormPage;else submitButton" (click)="moveToNextPage()">
+          <button>
             <h6
               class="w-min text-xl font-cormorant font-bold p-2 px-3 rounded-2xl bg-main text-light-bg hover:scale-90 hover:shadow-2xl transition duration-200">
-              NEXT
+              APPLY
             </h6>
           </button>
-          <ng-template #submitButton>
-            <button type="submit" data-modal-hide="recommendationModal">
-              <h6
-                class="w-min text-xl font-cormorant font-bold p-2 px-3 rounded-2xl bg-main text-light-bg hover:scale-90 hover:shadow-2xl transition duration-200">
-                APPLY
-              </h6>
-            </button>
-          </ng-template>
         </div>
       </div>
     </form>

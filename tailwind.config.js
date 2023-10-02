@@ -3,7 +3,8 @@ module.exports = {
   content: [
     './src/**/*.{html,ts}',
     './projects/**/*.{html,ts}',
-    "./node_modules/flowbite/**/*.js"
+    "./node_modules/flowbite/**/*.js",
+    "./node_modules/tw-elements/dist/js/**/*.js"
   ],
   theme: {
     backgroundImage: {
@@ -49,7 +50,8 @@ module.exports = {
     }
   },
   plugins: [
-    require('flowbite/plugin')
+    require('flowbite/plugin'),
+    require("tw-elements/dist/plugin.cjs")
   ],
 }
 

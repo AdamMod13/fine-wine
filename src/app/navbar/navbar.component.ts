@@ -11,17 +11,25 @@ import {MainCoutriesEnum, OtherCountriesEnum} from "../enums/coutries-enum";
 })
 export class NavbarComponent {
   @ViewChild('rf') private recommendationFormDirective: NgForm;
-  public recommendationForm: FormGroup;
 
-  public showRecommendationModal: boolean = false;
-  public isMorePicked: boolean = false;
-  public isFirstFormPage: boolean = true;
-  public isMainPage: boolean;
   public wineColorEnum = [WineColorEnum.RED, WineColorEnum.WHITE, WineColorEnum.ROSE, WineColorEnum.SPARKLING];
   public mainCoutriesEnum = MainCoutriesEnum;
   public otherCountriesEnum = OtherCountriesEnum;
+
+  public showRecommendationModal: boolean = false;
+  public isMorePicked: boolean = false;
+  public isMainPage: boolean;
   public pickedColors: string[] = [];
   public pickedCountry: string[] = [];
+
+  public recommendationForm = new FormGroup({
+    wineColor: new FormControl<string[]>([]),
+    maxPrice: new FormControl<number | null>(null),
+    country: new FormControl<string[]>([]),
+    variety: new FormControl<string>(''),
+    winery: new FormControl<string>(''),
+    points: new FormControl<number>(85)
+  });
 
   constructor(private router: Router) {
     this.router.events.subscribe((event: Event) => {
@@ -33,20 +41,12 @@ export class NavbarComponent {
 
   initRecommendationForm(): void {
     this.showRecommendationModal = true;
-    this.recommendationForm = new FormGroup({
-      wineColor: new FormControl([]),
-      maxPrice: new FormControl(15),
-      country: new FormControl([]),
-      variety: new FormControl(''),
-      winery: new FormControl(''),
-      points: new FormControl(85)
-    })
   }
 
   selectWineColor(wineColor: string): void {
     if (this.pickedColors.includes(wineColor)) {
       this.pickedColors.splice(this.pickedColors.indexOf(wineColor), 1);
-      this.recommendationForm.controls['wineColor'].setValue([...this.pickedColors]);
+      this.recommendationForm.controls.wineColor.setValue([...this.pickedColors]);
       return;
     }
     this.recommendationForm.controls['wineColor'].setValue([...this.pickedColors, wineColor]);
@@ -63,16 +63,12 @@ export class NavbarComponent {
     this.pickedCountry = [...this.pickedCountry, wineCountry];
   }
 
-  moveToNextPage() {
-    this.isFirstFormPage = !this.isFirstFormPage;
-  }
-
   onMorePicked() {
     this.isMorePicked = !this.isMorePicked;
   }
 
   onSubmitRecommendationForm(): void {
-    console.log(this.pickedCountry)
+    console.log(this.recommendationForm.controls.maxPrice.value)
     this.recommendationForm.controls['country'].setValue([...this.pickedCountry]);
     // this.recommendationFormDirective.resetForm();
     this.resetRecommendationForm();
@@ -89,6 +85,4 @@ export class NavbarComponent {
 
     this.recommendationForm.reset({maxPrice: 15, points: 85});
   }
-
-  protected readonly MainCoutriesEnum = MainCoutriesEnum;
 }
