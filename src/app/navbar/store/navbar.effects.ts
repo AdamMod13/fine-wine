@@ -3,21 +3,21 @@ import {switchMap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import * as MainPageActions from './main-page.action';
+import * as NavbarActions from './navbar.action';
 import {Wine} from "../../Models/wine.model";
 
 @Injectable()
-export class MainPageEffects {
-  fetchBestRandomWines = createEffect(() =>
+export class NavbarEffects {
+  fetchRecommendations = createEffect(() =>
     this.actions$.pipe(
-      ofType(MainPageActions.FETCH_BEST_RANDOM_WINES),
+      ofType(NavbarActions.FETCH_RECOMMENDATIONS),
       switchMap(() => {
         return this.http.get<Wine[]>(
-          'http://localhost:8080/api/wine/get-best-random-wines'
+          'http://localhost:8080/api/wine/get-recommendations'
         );
       }),
       map((wines) => {
-        return new MainPageActions.SetBestRandomWines(wines);
+        return new NavbarActions.SetRecommendations(wines);
       })
     )
   );
