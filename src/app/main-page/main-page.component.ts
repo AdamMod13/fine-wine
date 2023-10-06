@@ -4,6 +4,7 @@ import {Store} from '@ngrx/store';
 import {Wine} from "../Models/wine.model";
 import {Subscription} from "rxjs";
 import {map} from "rxjs/operators";
+import * as MainPageActions from "./store/main-page.action";
 
 @Component({
   selector: 'app-main-page',
@@ -18,12 +19,12 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.store.dispatch(new MainPageActions.FetchBestRandomWines());
     this.subscription = this.store
       .select('mainPage')
       .pipe(map((mainPageState) => mainPageState.bestRandomWines))
       .subscribe((wines: Wine[]) => {
         this.bestRandomWines = wines;
-        console.log(wines)
       })
   }
 

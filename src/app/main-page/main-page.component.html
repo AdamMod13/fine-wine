@@ -8,34 +8,34 @@
       class="w-1/3 h-full flex flex-row justify-center items-center text-light space-x-5 border-solid border-light border-l-2 border-r-2">
       <img src="./assets/Icons/corkscrew.png" alt="corkscrew"/>
       <div>
-        <h2 class="font-bold text-lg font-playfair">BECOME A WINE EXPERT</h2>
-        <p>Study and become sommelier</p>
+        <h2 class="font-bold text-xl font-playfair">BECOME A WINE EXPERT</h2>
+        <p class="text-lg">Study and become sommelier</p>
       </div>
     </div>
     <div class="w-1/3 h-full flex flex-row justify-center items-center text-light space-x-5">
       <heart-solid-icon class="text-light"></heart-solid-icon>
       <div>
-        <h2 class="font-bold text-lg font-playfair">FIGURE OUT WHAT YOU LIKE</h2>
-        <p>Try out our recommending tool</p>
+        <h2 class="font-bold text-xl font-playfair">FIGURE OUT WHAT YOU LIKE</h2>
+        <p class="text-lg">Try out our recommending tool</p>
       </div>
     </div>
     <div
       class="w-1/3 h-full flex flex-row justify-center items-center text-light space-x-5 border-solid border-light-bg border-l-2 border-r-2">
       <book-open-solid-icon></book-open-solid-icon>
       <div>
-        <h2 class="font-bold text-lg font-playfair">DRINK AND LEARN</h2>
-        <p>There are thousands of wines waiting</p>
+        <h2 class="font-bold text-xl font-playfair">DRINK AND LEARN</h2>
+        <p class="text-lg">There are thousands of wines waiting</p>
       </div>
     </div>
   </div>
 </div>
 <div class="bg-light-bg shadow-xl">
   <div
-    class="flex flex-row justify-between max-w-screen-2xl m-auto px-40 py-28">
+    class="flex flex-row justify-between max-w-screen-2xl m-auto px-24 py-24">
     <div class="w-2/3 space-y-4">
-      <h1 class="text-4xl text-dark font-bold font-playfair drop-shadow-lg">WHAT IS IT ABOUT?</h1>
+      <h1 class="text-3xl text-dark font-bold font-playfair drop-shadow-lg">WHAT IS IT ABOUT?</h1>
       <div class="w-1/12 h-1 bg-main"></div>
-      <p class="text-dark text-left">Lorem ipsum dolor sit amet, consectetur adipiscin elit, sed do eiusmod
+      <p class="text-dark text-left text-lg">Lorem ipsum dolor sit amet, consectetur adipiscin elit, sed do eiusmod
         tempor
         incididunt ut
         labore et dolore magna aliqua. Sed turpis tincidunt id aliquet risus feugiat. Enim blandit volutpat maecenas
@@ -55,41 +55,67 @@
     </div>
   </div>
 </div>
-<div class="w-full px-24 bg-light-bg flex flex-row justify-center items-center">
-  <span class="h-1 bg-main w-1/5"></span>
-  <h1 class="w-3/5 text-2xl text-dark text-center font-bold font-playfair drop-shadow-lg">THESE ARE OUR RECOMMENDATIONS
-    FOR THIS
-    WEEK</h1>
-  <span class="h-1 bg-main w-1/5"></span>
+<div class="bg-light-bg w-full">
+  <div class="max-w-screen-2xl flex flex-row px-24 justify-center items-center m-auto">
+    <span class="h-1 bg-main w-1/5"></span>
+    <h1 class="w-3/5 text-2xl text-dark text-center font-bold font-playfair drop-shadow-lg">THESE ARE OUR
+      RECOMMENDATIONS
+      FOR THIS
+      WEEK</h1>
+    <span class="h-1 bg-main w-1/5"></span>
+  </div>
 </div>
-<div class="px-24 bg-light-bg py-16">
-  <div class="m-auto max-w-screen-2xl flex flex-row justify-between space-x-6 items-center">
+<div class="bg-light-bg pb-24 pt-16">
+  <div class="m-auto max-w-screen-2xl px-24 flex flex-row justify-between space-x-6 items-center">
     <div *ngFor="let wine of bestRandomWines; let i = index"
-         class="w-1/4 p-4 bg-white shadow-xl rounded-md h-[30rem] flex flex-col justify-between relative">
+         class="w-1/4 pt-3 shadow-md rounded-xl h-[26rem] bg-light flex flex-col justify-between relative">
       <heart-outline-icon class="absolute top-3 right-3"></heart-outline-icon>
       <img [src]="'./assets/Images/' + wine.wineColor + '_wine.png'" alt="..."
            class="h-2/6 object-contain m-3"/>
-      <h1
-        class="text-xl font-semibold flex items-center font-playfair text-center m-auto h-1/6">{{ wine.winery }}</h1>
-      <div class="flex flex-col items-end h-3/6 flex-wrap justify-around bg-creme w-full shadow-xl p-4 rounded-lg">
-        <div class="w-full flex flex-row justify-between">
-          <div class="font-cormorant font-bold w-2/5">
-            <h1 class="text-lg text-medium">TYPE</h1>
-            <h1 class="text-md text-dark">{{ (wine.wineColor).charAt(0).toUpperCase() + wine.wineColor.slice(1) }}</h1>
+      <div
+        class="text-[16px] h-4/6 w-full flex flex-col justify-between rounded-b-2xl text-light-bg px-3 py-5 bg-main">
+        <h1
+          class="text-2xl w-full text-center font-semibold text-light-bg font-playfair h-2/6">{{ wine.winery }}</h1>
+        <div class="flex flex-row h-4/6">
+          <div class="w-full flex flex-col font-cormorant text-left justify-between">
+            <div class="flex flex-row items-center">
+              <div class="p-2 mr-1 scale-90 bg-main-dark rounded-lg shadow-2xl">
+                <star-solid-icon></star-solid-icon>
+              </div>
+              <div class="flex flex-col">
+                <p class="font-semibold">COLOR</p>
+                <p>{{ (wine.wineColor).charAt(0).toUpperCase() + wine.wineColor.slice(1) }}</p>
+              </div>
+            </div>
+            <div class="flex flex-row items-center">
+              <div class="p-2 mr-1 scale-90 bg-main-dark rounded-lg shadow-2xl">
+                <map-solid-icon></map-solid-icon>
+              </div>
+              <div class="flex flex-col">
+                <p class="font-semibold">COUNTRY</p>
+                <p>{{ wine.country }}</p>
+              </div>
+            </div>
           </div>
-          <div class="font-cormorant font-bold w-2/5">
-            <h1 class="text-lg text-medium">COUNTRY</h1>
-            <h1 class="text-md text-dark">{{ wine.country }}</h1>
-          </div>
-        </div>
-        <div class="w-full flex flex-row justify-between">
-          <div class="font-cormorant font-bold w-2/5">
-            <h1 class="text-lg text-medium">PROVINCE</h1>
-            <h1 class="text-md text-dark">{{ wine.province }}</h1>
-          </div>
-          <div class="font-cormorant font-bold w-2/5">
-            <h1 class="text-lg text-medium">POINTS</h1>
-            <h1 class="text-md text-dark">{{ wine.points }}</h1>
+          <div class="w-full flex flex-col justify-between font-cormorant">
+            <div class="w-5/12 flex flex-row items-center">
+              <div class="p-2 mr-1 scale-90 bg-main-dark rounded-lg shadow-2xl">
+                <map-pin-solid-icon></map-pin-solid-icon>
+              </div>
+              <div class="flex flex-col">
+                <p class="font-semibold">PROVINCE</p>
+                <p>{{ wine.province }}</p>
+              </div>
+            </div>
+            <div class="w-5/12 flex flex-row items-center">
+              <div class="p-2 mr-1 scale-90 bg-main-dark rounded-lg shadow-2xl">
+                <star-solid-icon></star-solid-icon>
+              </div>
+              <div class="flex flex-col">
+                <p class="font-semibold">POINTS</p>
+                <p>{{ wine.points }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -97,11 +123,11 @@
   </div>
 </div>
 <div class="h-[26rem] w-full bg-wineRack bg-cover relative">
-  <div class="absolute z-10 top-0 left-0 h-[26rem] w-full bg-black opacity-70"></div>
-  <div class="h-full flex flex-col max-w-screen-2xl justify-center items-center w-1/2 m-auto text-light-bg">
-    <h1 class="text-4xl z-20 font-semibold font-playfair drop-shadow-lg text-center">LEARN EVERYTHING ABOUT WINE</h1>
-    <div class="w-1/4 my-5 z-20 h-1 bg-main"></div>
-    <p class="text-center z-20 text-light-bg">Lorem ipsum dolor sit amet, consectetur adipiscin elit, sed
+  <div class="absolute z-0 top-0 left-0 h-[26rem] w-full bg-black opacity-70"></div>
+  <div class="h-full flex flex-col max-w-screen-2xl justify-center items-center m-auto text-light-bg px-24">
+    <h1 class="text-3xl z-10 font-semibold font-playfair drop-shadow-lg text-center">LEARN EVERYTHING ABOUT WINE</h1>
+    <div class="w-1/4 my-5 z-10 h-1 bg-main"></div>
+    <p class="text-center text-lg z-10 text-light-bg">Lorem ipsum dolor sit amet, consectetur adipiscin elit, sed
       do
       eiusmod
       tempor

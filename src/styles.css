@@ -12,4 +12,39 @@
   .circle {
     clip-path: ellipse(45% 45% at 50% 50%);
   }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    background: #eae8e8;
+    height: 1.5rem;
+    border-radius: 9999px;
+    outline: none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.9rem;
+    height: 1.9em;
+    background: #5C001E; /* Set the thumb (dot) color to purple */
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(0.9);
+    transition: all 100ms;
+    cursor: pointer;
+  }
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

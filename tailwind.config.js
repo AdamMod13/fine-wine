@@ -3,7 +3,8 @@ module.exports = {
   content: [
     './src/**/*.{html,ts}',
     './projects/**/*.{html,ts}',
-    "./node_modules/flowbite/**/*.js"
+    "./node_modules/flowbite/**/*.js",
+    "./node_modules/tw-elements/dist/js/**/*.js"
   ],
   theme: {
     backgroundImage: {
@@ -20,6 +21,7 @@ module.exports = {
       colors: {
         'main': '#5C001E',
         'main-light': '#B76E79',
+        'main-dark': '#2e000f',
         'light-bg': '#eae8e8',
         'dark-bg': '#1b1b1b',
         'dark': '#262120',
@@ -48,7 +50,8 @@ module.exports = {
     }
   },
   plugins: [
-    require('flowbite/plugin')
+    require('flowbite/plugin'),
+    require("tw-elements/dist/plugin.cjs")
   ],
 }
 
