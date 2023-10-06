@@ -1,4 +1,3 @@
-// @ts-ignore
 import {Action} from '@ngrx/store';
 import {Wine} from "../../Models/wine.model";
 

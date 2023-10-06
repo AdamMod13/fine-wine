@@ -13,11 +13,13 @@ import {EffectsModule} from "@ngrx/effects";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./app-routing.module";
+import {RecommendationFormModalComponent} from './recommendation-form-modal/recommendation-form-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
+    RecommendationFormModalComponent,
   ],
   imports: [
     BrowserModule,
