@@ -14,6 +14,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./app-routing.module";
 import {RecommendationFormModalComponent} from './recommendation-form-modal/recommendation-form-modal.component';
+import {RecommendationFormEffects} from "./recommendation-form-modal/store/recommendation-form.effects";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import {RecommendationFormModalComponent} from './recommendation-form-modal/reco
     NgOptimizedImage,
     StoreRouterConnectingModule.forRoot(),
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([MainPageEffects]),
+    EffectsModule.forRoot([MainPageEffects, RecommendationFormEffects]),
     ReactiveFormsModule,
   ],
   providers: [],

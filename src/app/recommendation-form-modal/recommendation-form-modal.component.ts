@@ -65,8 +65,10 @@ export class RecommendationFormModalComponent {
   }
 
   onSubmitRecommendationForm(): void {
+    this.pickedCountry = this.pickedCountry.map(country => {
+      return (country.charAt(0).toUpperCase() + country.slice(1))
+    })
     this.recommendationForm.controls['countries'].setValue([...this.pickedCountry]);
-    console.log(this.recommendationForm.value as WineRecommendationReq)
     const recommendationReq = this.recommendationForm.value as WineRecommendationReq;
     this.store.dispatch(new RecommendationFormActions.FetchRecommendations(recommendationReq));
     this.resetRecommendationForm();
