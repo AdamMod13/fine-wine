@@ -15,7 +15,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./app-routing.module";
 import {RecommendationFormModalComponent} from './recommendation-form-modal/recommendation-form-modal.component';
 import {RecommendationFormEffects} from "./recommendation-form-modal/store/recommendation-form.effects";
-import { SpinnerComponent } from './spinner/spinner.component';
+import {SpinnerComponent} from './spinner/spinner.component';
 
 @NgModule({
   declarations: [

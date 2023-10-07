@@ -72,6 +72,9 @@ export class RecommendationFormModalComponent {
     })
     this.recommendationForm.controls['countries'].setValue([...this.pickedCountry]);
     const recommendationReq = this.recommendationForm.value as WineRecommendationReq;
+    setTimeout(() => {
+      this.showRecommendationModal = false;
+    }, 1000)
     this.store.dispatch(new RecommendationFormActions.FetchRecommendations(recommendationReq));
     this.resetRecommendationForm();
   }

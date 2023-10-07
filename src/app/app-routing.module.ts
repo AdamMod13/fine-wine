@@ -15,6 +15,11 @@ const appRoutes: Routes = [
     loadChildren: () =>
       import('./find-wine/find-wine.module').then((m) => m.FindWineModule),
   },
+  {
+    path: 'recommendations',
+    loadChildren: () =>
+      import('./recommended-wine-page/recommended-wine-page.module').then((m) => m.RecommendedWinePageModule)
+  }
 ];
 
 @NgModule({
