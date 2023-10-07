@@ -6,6 +6,7 @@ import {Store} from "@ngrx/store";
 import * as fromApp from "../store/app.reducer";
 import * as RecommendationFormActions from "./store/recommendation-form.action";
 import {WineRecommendationReq} from "../Models/WineRecommendationReq.model";
+import {SpinnerService} from "../spinner/spinner.service";
 
 @Component({
   selector: 'app-recommendation-form-modal',
@@ -33,7 +34,7 @@ export class RecommendationFormModalComponent {
     points: new FormControl<number>(85)
   });
 
-  constructor(private store: Store<fromApp.AppState>) {
+  constructor(private store: Store<fromApp.AppState>, private spinnerService: SpinnerService) {
   }
 
   initRecommendationForm(): void {
@@ -65,6 +66,7 @@ export class RecommendationFormModalComponent {
   }
 
   onSubmitRecommendationForm(): void {
+    this.spinnerService.setLoading(true);
     this.pickedCountry = this.pickedCountry.map(country => {
       return (country.charAt(0).toUpperCase() + country.slice(1))
     })
