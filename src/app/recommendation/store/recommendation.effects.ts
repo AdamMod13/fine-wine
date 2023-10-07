@@ -19,8 +19,8 @@ export class RecommendationEffects {
           recommendationReq.payload
         );
       }),
-      switchMap((wines) => {
-        return [new RecommendationFormActions.SetRecommendations(wines), new RecommendationFormActions.SaveCurrentRecommendations(wines)];
+      map((wines) => {
+        return new RecommendationFormActions.SaveCurrentRecommendations(wines);
       }),
       tap(() => {
         this.spinnerService.setLoading(false);
@@ -30,16 +30,18 @@ export class RecommendationEffects {
   );
 
   saveCurrentRecommendations = createEffect(() =>
-      this.actions$.pipe(
-        ofType(RecommendationFormActions.SAVE_CURRENT_RECOMMENDATIONS),
-        switchMap((currentRecommendations: RecommendationFormActions.SaveCurrentRecommendations) => {
-          return this.http.post<Wine[]>(
-            'http://localhost:8080/api/wine/save-current-recommendations',
-            currentRecommendations.payload
-          );
-        })
-      ),
-    {dispatch: false}
+    this.actions$.pipe(
+      ofType(RecommendationFormActions.SAVE_CURRENT_RECOMMENDATIONS),
+      switchMap((currentRecommendations: RecommendationFormActions.SaveCurrentRecommendations) => {
+        return this.http.post<Wine[]>(
+          'http://localhost:8080/api/wine/save-current-recommendations',
+          currentRecommendations.payload
+        );
+      }),
+      map(() => {
+        return new RecommendationFormActions.GetCurrentRecommendations();
+      })
+    ),
   );
 
   getCurrentRecommendations = createEffect(() => {
