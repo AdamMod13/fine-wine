@@ -13,8 +13,10 @@ import {EffectsModule} from "@ngrx/effects";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./app-routing.module";
-import {RecommendationFormModalComponent} from './recommendation-form-modal/recommendation-form-modal.component';
-import {RecommendationFormEffects} from "./recommendation-form-modal/store/recommendation-form.effects";
+import {
+  RecommendationFormModalComponent
+} from './recommendation/recommendation-form-modal/recommendation-form-modal.component';
+import {RecommendationEffects} from "./recommendation/store/recommendation.effects";
 import {SpinnerComponent} from './spinner/spinner.component';
 
 @NgModule({
@@ -33,7 +35,7 @@ import {SpinnerComponent} from './spinner/spinner.component';
     NgOptimizedImage,
     StoreRouterConnectingModule.forRoot(),
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([MainPageEffects, RecommendationFormEffects]),
+    EffectsModule.forRoot([MainPageEffects, RecommendationEffects]),
     ReactiveFormsModule,
   ],
   providers: [],

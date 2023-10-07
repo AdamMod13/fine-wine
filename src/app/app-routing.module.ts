@@ -18,7 +18,7 @@ const appRoutes: Routes = [
   {
     path: 'recommendations',
     loadChildren: () =>
-      import('./recommended-wine-page/recommended-wine-page.module').then((m) => m.RecommendedWinePageModule)
+      import('./recommendation/recommendation.module').then((m) => m.RecommendationModule)
   }
 ];
 

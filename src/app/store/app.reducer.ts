@@ -1,5 +1,5 @@
 import * as fromMainPage from '../main-page/store/main-page.reducer';
-import * as fromRecommendationForm from '../recommendation-form-modal/store/recommendation-form.reducer';
+import * as fromRecommendationForm from '../recommendation/store/recommendation.reducer';
 import {ActionReducerMap} from '@ngrx/store';
 
 export interface AppState {
@@ -9,5 +9,5 @@ export interface AppState {
 
 export const appReducer: ActionReducerMap<AppState, any> = {
   mainPage: fromMainPage.mainPageReducer,
-  recommendationPage: fromRecommendationForm.recommendationFormReducer,
+  recommendationPage: fromRecommendationForm.recommendationReducer,
 };

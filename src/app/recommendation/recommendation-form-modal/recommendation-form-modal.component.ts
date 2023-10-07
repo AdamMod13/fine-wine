@@ -1,12 +1,12 @@
 import {Component, ViewChild} from '@angular/core';
-import {MainCoutriesEnum, OtherCountriesEnum} from "../enums/coutries-enum";
-import {WineColorEnum} from "../enums/wine-color-enum";
+import {MainCoutriesEnum, OtherCountriesEnum} from "../../enums/coutries-enum";
+import {WineColorEnum} from "../../enums/wine-color-enum";
 import {FormControl, FormGroup, NgForm} from "@angular/forms";
 import {Store} from "@ngrx/store";
-import * as fromApp from "../store/app.reducer";
-import * as RecommendationFormActions from "./store/recommendation-form.action";
-import {WineRecommendationReq} from "../Models/WineRecommendationReq.model";
-import {SpinnerService} from "../spinner/spinner.service";
+import * as fromApp from "../../store/app.reducer";
+import * as RecommendationFormActions from "../store/recommendation.action";
+import {WineRecommendationReq} from "../../Models/WineRecommendationReq.model";
+import {SpinnerService} from "../../spinner/spinner.service";
 
 @Component({
   selector: 'app-recommendation-form-modal',

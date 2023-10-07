@@ -1,4 +1,4 @@
-import * as RecommendationFormActions from './recommendation-form.action';
+import * as RecommendationFormActions from './recommendation.action';
 import {Wine} from "../../Models/wine.model";
 
 export interface RecommendationFormState {
@@ -9,7 +9,7 @@ const initialState: RecommendationFormState = {
   recommendedWines: []
 };
 
-export function recommendationFormReducer(
+export function recommendationReducer(
   state: RecommendationFormState = initialState,
   action: RecommendationFormActions.RecommendationFormActions
 ): RecommendationFormState {

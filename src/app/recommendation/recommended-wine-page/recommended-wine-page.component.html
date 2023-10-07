@@ -1,0 +1,34 @@
+<p>asdasdasdasd</p>
+<div class="w-full mx-24 flex flex-row justify-center space-y-3 text-black">
+  <ng-container *ngFor="let recommendedWine of recommendedWines;index as i">
+    <div class="w-1/2 h-[30rem] p-4 rounded-lg bg-transparent hover:shadow-xl">
+      <div class="flex flex-row justify-between items-center space-x-4">
+        <img [src]="'./assets/Images/' + recommendedWine.wineColor + '_bottle.png'" alt="..."
+             class="w-1/4 object-contain m-3"/>
+        <div class="flex flex-col justify-center items-stretch w-3/4">
+          <div class="flex flex-row justify-between items-center w-full">
+            <span>
+              <map-solid-icon></map-solid-icon>
+              <p>{{ recommendedWine.country }}</p>
+            </span>
+            <span>
+              <map-pin-solid-icon></map-pin-solid-icon>
+              <p>{{ recommendedWine.province }}</p>
+              </span>
+            <span>
+              <map-solid-icon></map-solid-icon>
+              <p>{{ recommendedWine.country }}</p>
+            </span>
+            <span>
+              <map-pin-solid-icon></map-pin-solid-icon>
+              <p>{{ recommendedWine.province }}</p>
+            </span>
+          </div>
+          <div class="w-full">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

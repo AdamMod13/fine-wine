@@ -1,6 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import {Event, NavigationStart, Router} from "@angular/router";
-import {RecommendationFormModalComponent} from "../recommendation-form-modal/recommendation-form-modal.component";
+import {
+  RecommendationFormModalComponent
+} from "../recommendation/recommendation-form-modal/recommendation-form-modal.component";
 
 @Component({
   selector: 'app-navbar',
