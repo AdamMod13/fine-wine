@@ -1,10 +1,11 @@
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {switchMap} from 'rxjs';
+import {switchMap, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import * as MainPageActions from './main-page.action';
 import {Wine} from "../../Models/wine.model";
+import {SpinnerService} from "../../spinner/spinner.service";
 
 @Injectable()
 export class MainPageEffects {
@@ -13,15 +14,18 @@ export class MainPageEffects {
       ofType(MainPageActions.FETCH_BEST_RANDOM_WINES),
       switchMap(() => {
         return this.http.get<Wine[]>(
-          'http://localhost:8080/api/wine/getBestRandomWines'
+          'http://localhost:8080/api/wine/get-best-random-wines'
         );
       }),
       map((wines) => {
         return new MainPageActions.SetBestRandomWines(wines);
-      })
+      }),
+      tap(() => setTimeout(() => {
+        this.spinnerService.setLoading(false)
+      }, 1500))
     )
   );
 
-  constructor(private actions$: Actions, private http: HttpClient) {
+  constructor(private actions$: Actions, private http: HttpClient, private spinnerService: SpinnerService) {
   }
 }

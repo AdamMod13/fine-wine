@@ -40,6 +40,18 @@
   }
 }
 
+input[data-te-select-input-ref], label[data-te-select-label-ref],
+div[data-te-input-wrapper-init] input, div[data-te-input-wrapper-init] label {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+div[data-te-select-form-outline-ref] span {
+  top: 17px;
+}
+
 html, body {
   height: 100%;
 }
