@@ -38,6 +38,15 @@
     transition: all 100ms;
     cursor: pointer;
   }
+
+  .error {
+    color: #9b0d3c;
+  }
+
+  .error-input {
+    border: solid 3px #9b0d3c;
+    border-radius: 0.25rem;
+  }
 }
 
 input[data-te-select-input-ref], label[data-te-select-label-ref],

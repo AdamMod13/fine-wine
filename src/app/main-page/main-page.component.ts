@@ -30,6 +30,10 @@ export class MainPageComponent implements OnInit, OnDestroy {
       })
   }
 
+  addToFavourites(wine: Wine) {
+
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
