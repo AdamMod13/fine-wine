@@ -1,0 +1,249 @@
+<!-- LOGIN MODAL -->
+<div
+  [ngClass]="{hidden: !showLoginModal}"
+>
+  <div
+    class="fixed top-0 left-0 w-full h-full bg-gray-900 opacity-75 z-[99]"
+  ></div>
+  <div
+    class="fixed top-0 left-0 z-[100] w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+  >
+    <div class="relative flex items-center justify-center h-full">
+      <!-- Modal content -->
+      <form [formGroup]="loginForm" #lf
+            (ngSubmit)="onSubmitLoginForm()"
+      >
+        <div class="relative bg-white w-[40rem] rounded-lg pb-6 shadow dark:bg-gray-700">
+          <!-- Modal header -->
+          <div class="flex flex-row w-full items-center justify-between px-6 pt-6 pb-3 rounded-t dark:border-gray-600">
+            <div class="w-1/6"></div>
+            <h3 class="text-2xl font-playfair text-center font-semibold text-dark-bg w-4/6">
+              LOGIN
+            </h3>
+            <div class="w-1/6 flex justify-end">
+              <button type="button"
+                      (click)="closeLoginForm()"
+                      class="text-white text-lg text-right bg-main hover:scale-90 hover:shadow-2xl transition duration-100
+                       rounded-2xl w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 14 14">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+              </button>
+            </div>
+          </div>
+          <!-- Modal body -->
+          <div class="px-6 mx-6 pt-10 space-y-6 font-cormorant font-bold text-lg">
+            <div class="flex flex-col w-full space-y-2">
+              <div
+                class="relative"
+                data-te-input-wrapper-init
+                [ngClass]="{'error-input':
+                  loginForm.controls['email'].touched &&
+                  (loginForm.controls['email'].errors?.['required'] || loginForm.controls['email'].errors?.['email']) }"
+              >
+                <input
+                  type="email"
+                  name="email"
+                  email="true"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                  id="emailControl"
+                  placeholder="Email address"
+                  formControlName="email"
+                />
+                <label
+                  for="emailControl"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                >Email address
+                </label>
+              </div>
+              <div class="error items-center space-x-1" *ngIf="loginForm.controls['email'].touched">
+                <p *ngIf="loginForm.controls['email'].errors?.['required']" class="flex">
+                  <information-circle-solid-icon></information-circle-solid-icon>
+                  Email is required
+                </p>
+                <p *ngIf="loginForm.controls['email'].errors?.['email']" class="flex">
+                  <information-circle-solid-icon></information-circle-solid-icon>
+                  Try again with a valid email
+                </p>
+              </div>
+            </div>
+
+            <div class="flex flex-col w-full space-y-2">
+              <div class="relative"
+                   [ngClass]="{'error-input': loginForm.controls['password'].errors?.['required'] && loginForm.controls['password'].touched}"
+                   data-te-input-wrapper-init>
+                <input
+                  type="password"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                  id="passwordControl"
+                  placeholder="Password"
+                  formControlName="password"
+                />
+                <label
+                  for="passwordControl"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                >Password
+                </label>
+              </div>
+              <div class="error flex items-center space-x-1" *ngIf="loginForm.controls['password'].touched">
+                <p *ngIf="loginForm.controls['password'].errors?.['required']" class="flex">
+                  <information-circle-solid-icon></information-circle-solid-icon>
+                  Password is required
+                </p>
+              </div>
+            </div>
+
+          </div>
+          <div class="w-full flex justify-between items-center px-6 pt-12">
+            <button (click)="clearLoginForm()">
+              <h6
+                class="w-min text-xl font-cormorant font-bold p-2 px-3 rounded-2xl bg-main text-light-bg hover:scale-90
+                 hover:shadow-2xl transition duration-200"
+              >
+                CLEAR
+              </h6>
+            </button>
+            <button type="submit">
+              <h6
+                class="w-min text-xl font-cormorant font-bold p-2 px-3 rounded-2xl bg-main text-light-bg hover:scale-90
+                 hover:shadow-2xl transition duration-200"
+              >
+                LOGIN
+              </h6>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- SIGN UP MODAL -->
+<div
+  [ngClass]="{hidden: !showSignUpModal}"
+>
+  <div
+    class="fixed top-0 left-0 w-full h-full bg-gray-900 opacity-75 z-[99]"
+  ></div>
+  <div
+    class="fixed top-0 left-0 z-[100] w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+  >
+    <div class="relative flex items-center justify-center h-full">
+      <!-- Modal content -->
+      <form [formGroup]="signUpForm" #lf
+            (ngSubmit)="onSubmitSignUpForm()"
+      >
+        <div class="relative bg-white w-[40rem] rounded-lg pb-6 shadow dark:bg-gray-700">
+          <!-- Modal header -->
+          <div class="flex flex-row w-full items-center justify-between px-6 pt-6 pb-3 rounded-t dark:border-gray-600">
+            <div class="w-1/6"></div>
+            <h3 class="text-2xl font-playfair text-center font-semibold text-dark-bg w-4/6">
+              SIGN UP
+            </h3>
+            <div class="w-1/6 flex justify-end">
+              <button type="button"
+                      (click)="closeSignUpForm()"
+                      class="text-white text-lg text-right bg-main hover:scale-90 hover:shadow-2xl transition duration-100
+                       rounded-2xl w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 14 14">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+              </button>
+            </div>
+          </div>
+          <!-- Modal body -->
+          <div class="px-6 mx-6 pt-10 space-y-6 font-cormorant font-bold text-lg">
+            <div class="flex flex-col w-full space-y-2">
+              <div
+                class="relative"
+                data-te-input-wrapper-init
+                [ngClass]="{'error-input':
+                  signUpForm.controls['email'].touched &&
+                  (signUpForm.controls['email'].errors?.['required'] || signUpForm.controls['email'].errors?.['email']) }"
+              >
+                <input
+                  type="email"
+                  name="email"
+                  email="true"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                  id="emailControlSignUp"
+                  placeholder="Email address"
+                  formControlName="email"
+                />
+                <label
+                  for="emailControlSignUp"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                >Email address
+                </label>
+              </div>
+              <div class="error items-center space-x-1" *ngIf="signUpForm.controls['email'].touched">
+                <p *ngIf="signUpForm.controls['email'].errors?.['required']" class="flex">
+                  <information-circle-solid-icon></information-circle-solid-icon>
+                  Email is required
+                </p>
+                <p *ngIf="signUpForm.controls['email'].errors?.['email']" class="flex">
+                  <information-circle-solid-icon></information-circle-solid-icon>
+                  Try again with a valid email
+                </p>
+              </div>
+            </div>
+
+            <div class="flex flex-col w-full space-y-2">
+              <div class="relative"
+                   [ngClass]="{'error-input': signUpForm.controls['password'].errors?.['required'] && signUpForm.controls['password'].touched}"
+                   data-te-input-wrapper-init>
+                <input
+                  type="password"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                  id="passwordControlSignUp"
+                  placeholder="Password"
+                  formControlName="password"
+                />
+                <label
+                  for="passwordControlSignUp"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                >Password
+                </label>
+              </div>
+              <div class="error flex items-center space-x-1" *ngIf="signUpForm.controls['password'].touched">
+                <p *ngIf="signUpForm.controls['password'].errors?.['required']" class="flex">
+                  <information-circle-solid-icon></information-circle-solid-icon>
+                  Password is required
+                </p>
+              </div>
+            </div>
+
+          </div>
+          <div class="w-full flex justify-between items-center px-6 pt-12">
+            <button (click)="clearSignUpForm()">
+              <h6
+                class="w-min text-xl font-cormorant font-bold p-2 px-3 rounded-2xl bg-main text-light-bg hover:scale-90
+                 hover:shadow-2xl transition duration-200"
+              >
+                CLEAR
+              </h6>
+            </button>
+            <button type="submit">
+              <h6
+                class="w-auto text-xl font-cormorant font-bold p-2 px-3 rounded-2xl bg-main text-light-bg hover:scale-90
+                 hover:shadow-2xl transition duration-200"
+              >
+                SIGN UP
+              </h6>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+

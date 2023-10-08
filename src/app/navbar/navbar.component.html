@@ -32,16 +32,16 @@
       </a>
     </ul>
     <div class="flex w-3/12 text-lg justify-end">
-      <div *ngIf="false; else isLoggedIn" class="flex flex-row space-x-12">
-        <button class="relative group px-1">
+      <div *ngIf="!isUserLoggedIn; else isLoggedIn" class="flex flex-row space-x-12">
+        <button class="relative group px-1" (click)="openLoginModal()">
           <span>LOGIN</span>
           <span
             class="absolute bottom-1 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
           <span
             class="absolute bottom-1 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
         </button>
-        <button class="bg-main py-3 px-4">
-          SIGN IN
+        <button class="bg-main py-3 px-4" (click)="openSignUpModal()">
+          SIGN UP
         </button>
       </div>
       <ng-template #isLoggedIn>
@@ -73,3 +73,4 @@
 </div>
 
 <app-recommendation-form-modal></app-recommendation-form-modal>
+<app-auth></app-auth>

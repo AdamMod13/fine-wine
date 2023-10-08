@@ -69,7 +69,7 @@
   <div class="m-auto max-w-screen-2xl px-24 flex flex-row justify-between space-x-6 items-center">
     <div *ngFor="let wine of bestRandomWines; let i = index"
          class="w-1/4 pt-3 shadow-md rounded-xl h-[35rem] bg-light flex flex-col justify-between relative">
-      <heart-outline-icon class="absolute top-3 right-3"></heart-outline-icon>
+      <heart-outline-icon class="absolute top-3 right-3" (click)="addToFavourites(wine)"></heart-outline-icon>
       <img [src]="'./assets/Images/' + wine.wineColor + '_bottle.png'" alt="..."
            class="h-3/6 object-contain m-3"/>
       <div

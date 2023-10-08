@@ -18,6 +18,9 @@ import {
 } from './recommendation/recommendation-form-modal/recommendation-form-modal.component';
 import {RecommendationEffects} from "./recommendation/store/recommendation.effects";
 import {SpinnerComponent} from './spinner/spinner.component';
+import {AuthEffects} from "./auth/store/auth.effects";
+import {CoreModule} from "./core.module";
+import {AuthModule} from "./auth/auth.module";
 
 @NgModule({
   declarations: [
@@ -35,8 +38,10 @@ import {SpinnerComponent} from './spinner/spinner.component';
     NgOptimizedImage,
     StoreRouterConnectingModule.forRoot(),
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([MainPageEffects, RecommendationEffects]),
+    EffectsModule.forRoot([MainPageEffects, RecommendationEffects, AuthEffects]),
     ReactiveFormsModule,
+    CoreModule,
+    AuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
