@@ -53,6 +53,9 @@ const handleError = (errorRes: any) => {
     case 'INVALID_PASSWORD':
       errorMessage = 'This password is not correct.';
       break;
+    case 'INVALID_LOGIN_CREDENTIALS':
+      errorMessage = 'Credentials are not correct.';
+      break;
   }
   return of(new AuthActions.AuthenticateFail(errorMessage));
 };
@@ -65,7 +68,7 @@ export class AuthEffects {
       switchMap((signupAction: AuthActions.SignupStart) => {
         return this.http
           .post<AuthResponseData>(
-            'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' +
+            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
             environment.firebaseAPIKey,
             {
               email: signupAction.payload.email,
@@ -99,7 +102,7 @@ export class AuthEffects {
       switchMap((authData: AuthActions.LoginStart) => {
         return this.http
           .post<AuthResponseData>(
-            'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=' +
+            'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
             environment.firebaseAPIKey,
             {
               email: authData.payload.email,
@@ -183,7 +186,7 @@ export class AuthEffects {
       tap(() => {
         this.authService.clearLogoutTimer();
         localStorage.removeItem('userData');
-        this.router.navigate(['/auth']);
+        this.router.navigate(['/main-page']);
       })
     ), {dispatch: false}
   );

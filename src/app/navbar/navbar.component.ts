@@ -6,6 +6,7 @@ import {
 import {AuthComponent} from "../auth/auth.component";
 import {Store} from "@ngrx/store";
 import * as fromApp from "../store/app.reducer";
+import * as AuthActions from '../auth/store/auth.actions';
 import {Subscription} from "rxjs";
 
 @Component({
@@ -21,6 +22,7 @@ export class NavbarComponent implements OnInit {
 
   public isMainPage: boolean;
   public isUserLoggedIn: boolean = false;
+  public isAccountDropdownOpen: boolean = false;
 
   constructor(private router: Router, private store: Store<fromApp.AppState>) {
     this.router.events.subscribe((event: Event) => {
@@ -32,9 +34,24 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.storeSub = this.store.select('auth').subscribe(authState => {
-      console.log(authState)
       authState.user ? this.isUserLoggedIn = true : this.isUserLoggedIn = false;
     });
+  }
+
+  toggleAccountDropdown() {
+    this.isAccountDropdownOpen = !this.isAccountDropdownOpen;
+  }
+
+  openAccountDropdown() {
+    this.isAccountDropdownOpen = true;
+  }
+
+  closeAccountDropdown() {
+    this.isAccountDropdownOpen = false;
+  }
+
+  logout() {
+    this.store.dispatch(new AuthActions.Logout())
   }
 
   openRecommendationFormModal() {

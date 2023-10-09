@@ -20,7 +20,8 @@ import {RecommendationEffects} from "./recommendation/store/recommendation.effec
 import {SpinnerComponent} from './spinner/spinner.component';
 import {AuthEffects} from "./auth/store/auth.effects";
 import {CoreModule} from "./core.module";
-import {AuthModule} from "./auth/auth.module";
+import {ErrorModalComponent} from './Shared/error-modal/error-modal.component';
+import {AuthComponent} from './auth/auth.component'
 
 @NgModule({
   declarations: [
@@ -28,6 +29,8 @@ import {AuthModule} from "./auth/auth.module";
     NavbarComponent,
     RecommendationFormModalComponent,
     SpinnerComponent,
+    ErrorModalComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,6 @@ import {AuthModule} from "./auth/auth.module";
     EffectsModule.forRoot([MainPageEffects, RecommendationEffects, AuthEffects]),
     ReactiveFormsModule,
     CoreModule,
-    AuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
