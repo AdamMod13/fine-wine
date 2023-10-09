@@ -27,7 +27,8 @@ module.exports = {
         'dark': '#262120',
         'creme': '#f0ece3',
         'medium': '#b0adad',
-        'light': '#fcfcfc'
+        'light': '#fcfcfc',
+        'error': '#9b0d3c',
       },
     },
     fontFamily: {

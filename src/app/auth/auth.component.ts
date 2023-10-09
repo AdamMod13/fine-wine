@@ -1,20 +1,23 @@
-import {Component, ComponentFactoryResolver, OnDestroy, OnInit} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../store/app.reducer';
 import * as AuthActions from './store/auth.actions';
+import {ErrorModalComponent} from "../Shared/error-modal/error-modal.component";
+import {SpinnerService} from "../spinner/spinner.service";
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html'
 })
 export class AuthComponent implements OnInit, OnDestroy {
+  @ViewChild(ErrorModalComponent) private errorModal: ErrorModalComponent;
+
   private closeSub: Subscription;
   private storeSub: Subscription;
 
   public isLoginMode: boolean = true;
-  public isLoading: boolean = false;
   public error: string | null = null;
 
   public showLoginModal: boolean = false;
@@ -32,22 +35,22 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.AppState>,
+    private spinnerService: SpinnerService,
   ) {
   }
 
   ngOnInit() {
     this.storeSub = this.store.select('auth').subscribe(authState => {
-      console.log(authState)
-      this.isLoading = authState.loading;
       this.error = authState.authError;
       if (this.error) {
-        // this.showErrorAlert(this.error);
+        this.errorModal.open(this.error);
       }
       if (authState.user) {
         this.closeModals();
         this.closeSubscriptions();
       }
+      this.spinnerService.setLoading(false);
     });
   }
 
@@ -63,12 +66,15 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   onSubmitLoginForm() {
     if (!this.loginForm.valid) {
+      this.loginForm.controls['email']?.markAsTouched();
+      this.loginForm.controls['password']?.markAsTouched();
       return;
     }
     const email = this.loginForm.controls['email']?.value;
-    const password = this.loginForm.controls['email']?.value;
+    const password = this.loginForm.controls['password']?.value;
 
     if (this.isLoginMode && email && password) {
+      this.spinnerService.setLoading(true);
       this.store.dispatch(
         new AuthActions.LoginStart({email: email, password: password})
       );
@@ -79,12 +85,15 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   onSubmitSignUpForm() {
     if (!this.signUpForm.valid) {
+      this.loginForm.controls['email']?.markAsTouched();
+      this.loginForm.controls['password']?.markAsTouched();
       return;
     }
     const email = this.signUpForm.controls['email']?.value;
-    const password = this.signUpForm.controls['email']?.value;
+    const password = this.signUpForm.controls['password']?.value;
 
     if (!this.isLoginMode && email && password) {
+      this.spinnerService.setLoading(true);
       this.store.dispatch(
         new AuthActions.SignupStart({email: email, password: password})
       );

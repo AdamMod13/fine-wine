@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as fromApp from "./store/app.reducer";
-import {initTE, Input, Select} from 'tw-elements';
+import {Dropdown, initTE, Input, Ripple, Select} from 'tw-elements';
 import * as AuthActions from './auth/store/auth.actions';
 
 @Component({
@@ -17,6 +17,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new AuthActions.AutoLogin());
-    initTE({Select, Input})
+    initTE({Select, Input, Dropdown, Ripple})
   }
 }
