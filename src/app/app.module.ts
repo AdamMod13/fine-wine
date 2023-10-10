@@ -31,7 +31,7 @@ import {FindWineEffects} from "./find-wine/store/find-wine.effects";
     RecommendationFormModalComponent,
     SpinnerComponent,
     ErrorModalComponent,
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
