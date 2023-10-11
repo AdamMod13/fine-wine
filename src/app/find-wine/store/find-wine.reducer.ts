@@ -17,7 +17,7 @@ export function findWineReducer(
   action: FindWineActions.FindWineActions
 ): FindWineState {
   switch (action.type) {
-    case FindWineActions.SET_WINES:
+    case FindWineActions.SET_WINE_PAGE:
       if (action.payload.content) {
         return {
           ...state,

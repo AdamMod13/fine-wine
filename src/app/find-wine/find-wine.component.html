@@ -1,139 +1,196 @@
 <div class="absolute top-0 left-0 w-full bg-light-bg z-0"></div>
-<div class="w-full max-w-screen-2xl mx-24 my-12 flex flex-row">
-  <div class="w-[32%] flex flex-col gap-y-10 my-12">
-    <div>
-      <div class="flex flex-row justify-between items-center w-full px-3">
-        <div class="w-[33%] h-[0.5px] bg-gray-300"></div>
-        <h1 class="w-[34%] text-center text-xl font-playfair px-4 font-bold">
-          Wine Colors
-        </h1>
-        <div class="w-[33%] h-[0.5px] bg-gray-300"></div>
-      </div>
-      <div class="flex flex-row flex-wrap pt-2 px-4 w-full">
-        <div *ngFor="let wineColor of wineColorEnum"
-             (click)="selectWineColor(wineColor)"
-             [ngClass]="pickedColors.includes(wineColor) ? 'bg-white' : 'bg-light-bg scale-95'"
-             class="px-4 py-2 mr-2 my-2 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-[1.01] hover:shadow-lg
-                   transition duration-100 cursor-pointer">
-          <div>
+<div class="w-full flex justify-center">
+  <div class="w-full max-w-screen-2xl mx-24 my-12 flex flex-row">
+    <div class="w-[30%] fixed h-[80%] overflow-y-scroll flex flex-col gap-y-10">
+      <div>
+        <div class="flex flex-row justify-between items-center w-full px-3">
+          <div class="w-[30%] h-[0.5px] bg-main"></div>
+          <h1 class="w-[40%] text-center text-2xl font-playfair px-4 font-bold">
+            Wine Colors
+          </h1>
+          <div class="w-[30%] h-[0.5px] bg-main"></div>
+        </div>
+        <div class="flex flex-row flex-wrap pt-2 px-4 w-full">
+          <div *ngFor="let wineColor of wineColorEnum"
+               (click)="selectWineColor(wineColor)"
+               [ngClass]="pickedColors.includes(wineColor) ? 'bg-white' : 'bg-light-bg scale-95'"
+               class="px-4 py-2 mr-2 my-2 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-[1.01] hover:shadow-lg
+                   transition duration-300 cursor-pointer active:scale-90 active:bg-white">
+            <div>
             <span class="font-cormorant text-sm font-bold">
-            {{ wineColor.toUpperCase() }}
-          </span>
+              {{ wineColor.toUpperCase() }}
+            </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div>
-      <div class="flex flex-row justify-between items-center w-full px-3">
-        <div class="w-[33%] h-[0.5px] bg-gray-300"></div>
-        <h1 class="w-[34%] text-center text-xl font-playfair px-4 font-bold">
-          Countries
-        </h1>
-        <div class="w-[33%] h-[0.5px] bg-gray-300"></div>
-      </div>
-      <div class="flex flex-row flex-wrap pt-2 px-4 w-full">
-        <div *ngFor="let country of mainCoutriesEnum | keyvalue"
-             (click)="selectCountry(country.key.toLowerCase())"
-             [ngClass]="pickedCountry.includes(country.key.toLowerCase()) ? 'bg-white' : 'bg-light-bg scale-95'"
-             class="px-4 py-2 mr-2 my-2 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-[1.01] hover:shadow-lg
-                   transition duration-100 cursor-pointer">
-          <div>
-            <span class="fi" [ngClass]="'fi-' + country.value"></span>
-            <span class="font-cormorant text-sm font-semibold">
-            {{ country.key }}
-          </span>
+      <div>
+        <div class="flex flex-row justify-between items-center w-full px-3">
+          <div class="w-[33%] h-[0.5px] bg-main"></div>
+          <h1 class="w-[34%] text-center text-2xl font-playfair px-4 font-bold">
+            Countries
+          </h1>
+          <div class="w-[33%] h-[0.5px] bg-main"></div>
+        </div>
+        <div class="flex flex-row flex-wrap pt-2 px-4 w-full">
+          <div *ngFor="let country of mainCoutriesEnum | keyvalue"
+               (click)="selectCountry(country.key.toLowerCase())"
+               [ngClass]="pickedCountries.includes(country.key.toLowerCase()) ? 'bg-white' : 'bg-light-bg scale-95'"
+               class="px-4 py-2 mr-2 my-2 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-[1.01] hover:shadow-lg
+                   transition duration-300 cursor-pointer active:scale-90 active:bg-white">
+            <div class="flex flex-row gap-x-2 justify-center items-center">
+              <span class="fi" [ngClass]="'fi-' + country.value"></span>
+              <span class="font-cormorant text-sm font-semibold">
+                {{ country.key }}
+              </span>
+            </div>
+          </div>
+          <div
+            (click)="onMorePicked()"
+            [ngClass]="isMorePicked ? 'bg-white' : 'bg-light-bg scale-95'"
+            class="px-4 py-2 my-2 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-[1.01] hover:shadow-lg
+                transition duration-300 cursor-pointer active:scale-90 active:bg-white"
+          >
+            <span
+              class="font-cormorant text-sm font-semibold text-center">
+              {{ !isMorePicked ? 'MORE' : 'LESS' }}
+            </span>
           </div>
         </div>
-        <div
-          (click)="onMorePicked()"
-          [ngClass]="isMorePicked ? 'bg-white' : 'bg-light-bg scale-95'"
-          class="px-4 py-2 my-2 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-[1.01] hover:shadow-lg
-                transition duration-100 cursor-pointer"
-        >
-        <span
-          class="font-cormorant text-sm font-semibold text-center">
-          {{ !isMorePicked ? 'MORE' : 'LESS' }}
-        </span>
+        <div *ngIf="isMorePicked"
+             class="flex flex-row flex-wrap px-4 w-full">
+          <div
+            *ngFor="let otherCountry of otherCountriesEnum | keyvalue"
+            (click)="selectCountry(otherCountry.key.toLowerCase())"
+            [ngClass]="pickedCountries.includes(otherCountry.key.toLowerCase()) ? 'bg-white' : 'bg-light-bg scale-95'"
+            class="px-4 py-2 my-2 mr-1 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-90 hover:shadow-lg
+                   transition duration-300 cursor-pointer active:scale-90 active:bg-white"
+          >
+            <div class="flex flex-row gap-x-2 justify-center items-center">
+              <span class="fi" [ngClass]="'fi-' + otherCountry.value"></span>
+              <span class="font-cormorant text-sm font-semibold">
+                {{ otherCountry.key }}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
-      <div *ngIf="isMorePicked"
-           class="flex flex-row flex-wrap px-4 w-full">
-        <div
-          *ngFor="let otherCountry of otherCountriesEnum | keyvalue"
-          (click)="selectCountry(otherCountry.key.toLowerCase())"
-          [ngClass]="pickedCountry.includes(otherCountry.key.toLowerCase()) ? 'bg-white' : 'bg-light-bg scale-95'"
-          class="px-4 py-2 my-2 mr-1 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-90 hover:shadow-lg
-                   transition duration-100 cursor-pointer"
-        >
-          <span class="fi" [ngClass]="'fi-' + otherCountry.value"></span>
-          <span class="font-cormorant text-sm font-semibold">
-          {{ otherCountry.key }}
-        </span>
+      <div>
+        <div class="flex flex-row justify-between items-center w-full px-3">
+          <div class="w-[33%] h-[0.5px] bg-main"></div>
+          <h1 class="w-[34%] text-center text-2xl font-playfair px-4 font-bold">
+            Province
+          </h1>
+          <div class="w-[33%] h-[0.5px] bg-main"></div>
         </div>
-      </div>
-    </div>
-    <div>
-      <div class="flex flex-row justify-between items-center w-full px-3">
-        <div class="w-[33%] h-[0.5px] bg-gray-300"></div>
-        <h1 class="w-[34%] text-center text-xl font-playfair px-4 font-bold">
-          Regions
-        </h1>
-        <div class="w-[33%] h-[0.5px] bg-gray-300"></div>
-      </div>
-      <div class="flex flex-row flex-wrap pt-2 px-4 w-full">
-        <div *ngFor="let basicRegion of basicRegionsEnum | keyvalue"
-             (click)="selectRegion(basicRegion.key.toLowerCase())"
-             [ngClass]="pickedColors.includes(basicRegion.key.toLowerCase()) ? 'bg-white' : 'bg-light-bg scale-95'"
-             class="px-4 py-2 mr-2 my-2 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-[1.01] hover:shadow-lg
-                   transition duration-100 cursor-pointer">
-          <div>
+        <div class="flex flex-row flex-wrap pt-2 px-4 w-full">
+          <div *ngFor="let basicProvince of basicProvincesEnum | keyvalue"
+               (click)="selectProvince(basicProvince.key.toLowerCase())"
+               [ngClass]="pickedProvinces.includes(basicProvince.key.toLowerCase()) ? 'bg-white' : 'bg-light-bg scale-95'"
+               class="px-4 py-2 mr-2 my-2 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-[1.01] hover:shadow-lg
+                   transition duration-300 cursor-pointer active:scale-90 active:bg-white">
+            <div>
             <span class="font-cormorant text-sm font-bold">
-            {{ basicRegion.key.toUpperCase() }}
+            {{ basicProvince.key.toUpperCase() }}
           </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div>
-      <div class="flex flex-row justify-between items-center w-full px-3">
-        <div class="w-[33%] h-[0.5px] bg-gray-300"></div>
-        <h1 class="w-[34%] text-center text-xl font-playfair px-4 font-bold">
-          Variety
-        </h1>
-        <div class="w-[33%] h-[0.5px] bg-gray-300"></div>
-      </div>
-      <div class="flex flex-row flex-wrap pt-2 px-4 w-full">
-        <div *ngFor="let basicVariety of basicVarietyEnum | keyvalue"
-             (click)="selectRegion(basicVariety.key.toLowerCase())"
-             [ngClass]="pickedColors.includes(basicVariety.key.toLowerCase()) ? 'bg-white' : 'bg-light-bg scale-95'"
-             class="px-4 py-2 mr-2 my-2 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-[1.01] hover:shadow-lg
-                   transition duration-100 cursor-pointer">
-          <div>
+      <div>
+        <div class="flex flex-row justify-between items-center w-full px-3">
+          <div class="w-[33%] h-[0.5px] bg-main"></div>
+          <h1 class="w-[34%] text-center text-2xl font-playfair px-4 font-bold">
+            Variety
+          </h1>
+          <div class="w-[33%] h-[0.5px] bg-main"></div>
+        </div>
+        <div class="flex flex-row flex-wrap pt-2 px-4 w-full">
+          <div *ngFor="let basicVariety of basicVarietyEnum | keyvalue"
+               (click)="selectVariety(basicVariety.key.toLowerCase())"
+               [ngClass]="pickedVarieties.includes(basicVariety.key.toLowerCase()) ? 'bg-white' : 'bg-light-bg scale-95'"
+               class="px-4 py-2 mr-2 my-2 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-[1.01] hover:shadow-lg
+                   transition duration-300 cursor-pointer active:scale-90 active:bg-white">
+            <div>
             <span class="font-cormorant text-sm font-bold">
             {{ basicVariety.key.toUpperCase() }}
           </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="w-[6%]"></div>
-  <div class="w-[62%] flex flex-col justify-center items-center gap-4">
-    <div *ngFor="let wine of wines; let i = index"
-         class="w-full flex flex-row rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out hover:scale-[1.01]">
-      <div class="w-1/4">
-        <div class="relative z-0">
-          <img alt="wine_picture" [src]="'./assets/Images/winery_' + ((i%2)+1) + '.jpg'"
-               class="absolute image-cut-shape"/>
+      <div class="flex flex-row justify-around items-center mt-4 mb-8">
+        <div class="flex flex-row justify-center items-center w-full">
+          <button (click)="clearFilterForm()" class="text-center text-light-bg px-5 py-2 rounded-md text-lg font-playfair
+            font-bold bg-main hover:shadow-2xl hover:scale-[1.05] transition-all duration-200 ease-in-out border-solid border-2
+            active:scale-95 active:bg-main-dark"
+          >
+            Clear
+          </button>
         </div>
-        <div class="relative z-10">
-          <img alt="wine_bottle_picture" [src]="'./assets/Images/' + wine.wineColor + '_bottle.png'"/>
+        <div class="flex flex-row justify-center items-center w-full">
+          <button (click)="applyFilters()" class="text-center text-light-bg px-5 py-2 rounded-md text-lg font-playfair
+            font-bold bg-main hover:shadow-2xl hover:scale-[1.05] transition-all duration-200 ease-in-out border-solid border-2
+            active:scale-95 active:bg-main-dark"
+          >
+            Apply
+          </button>
         </div>
       </div>
-      <div class="w-3/4">
-
+    </div>
+    <div class="w-[32%]"></div>
+    <div class="w-[6%]"></div>
+    <div class="w-[62%] flex flex-col justify-center items-center gap-4">
+      <div *ngFor="let wine of wines; let i = index"
+           class="w-full flex flex-row rounded-lg shadow-lg hover:shadow-2xl border-gray-300 border-solid border-2
+           transition-all duration-300 ease-in-out hover:scale-[1.01]">
+        <div class="w-1/4">
+          <div class="relative z-0">
+            <img alt="wine_picture" [src]="'./assets/Images/winery_' + ((i%2)+1) + '.jpg'"
+                 class="absolute image-cut-shape"/>
+          </div>
+          <div class="relative z-10">
+            <img alt="wine_bottle_picture" [src]="'./assets/Images/' + wine.wineColor + '_bottle.png'"/>
+          </div>
+        </div>
+        <div class="w-3/4 flex flex-col items-start py-6 px-12">
+          <h1 class="font-playfair font-bold text-2xl text-dark">{{ wine.winery }}</h1>
+          <div class="flex justify-center items-center gap-x-2 mt-2">
+            <span class="fi fis rounded-full scale-[1.35]"
+                  [ngClass]="'fi-' + wine.country.toLowerCase().slice(0,2)"></span>
+            <span class="font-cormorant text-xl font-semibold">{{ wine.variety }}, {{ wine.country }}</span>
+          </div>
+          <div class="flex flex-row items-center gap-x-12 w-full mt-8 font-cormorant font-semibold text-xl">
+            <span class="flex flex-row gap-x-1">
+              <map-pin-solid-icon></map-pin-solid-icon>
+              <p>
+                {{ wine.province }}
+              </p>
+            </span>
+            <span *ngIf="wine.price != '0.0'"
+                  class="flex flex-row gap-x-1"
+            >
+              <banknotes-solid-icon></banknotes-solid-icon>
+              <p>{{ wine.price }}$</p>
+            </span>
+            <span class="flex flex-row gap-x-1">
+              <star-solid-icon></star-solid-icon>
+              <p>{{ wine.points}}</p>
+            </span>
+          </div>
+          <div class="overflow-auto mt-2 font-cormorant text-lg font-semibold">
+            <p>{{ wine.description }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-row justify-center items-center w-full mt-12">
+        <button (click)="loadMore(pageNumber)" class="text-center text-light-bg px-5 py-2 rounded-md text-xl font-playfair
+          font-bold bg-main hover:shadow-2xl hover:scale-[1.05] transition-all duration-200 ease-in-out border-solid border-2
+          active:scale-95 active:bg-main-dark"
+        >
+          Load More
+        </button>
       </div>
     </div>
   </div>
-
 </div>

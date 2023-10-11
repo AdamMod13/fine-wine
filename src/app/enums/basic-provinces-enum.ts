@@ -1,4 +1,4 @@
-export enum BasicRegionsEnum {
+export enum BasicProvincesEnum {
   ITALY = 'it',
   GERMANY = 'de',
   FRANCE = 'fr',
