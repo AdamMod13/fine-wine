@@ -22,6 +22,7 @@ import {AuthEffects} from "./auth/store/auth.effects";
 import {CoreModule} from "./core.module";
 import {ErrorModalComponent} from './Shared/error-modal/error-modal.component';
 import {AuthComponent} from './auth/auth.component'
+import {FindWineEffects} from "./find-wine/store/find-wine.effects";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import {AuthComponent} from './auth/auth.component'
     RecommendationFormModalComponent,
     SpinnerComponent,
     ErrorModalComponent,
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +42,7 @@ import {AuthComponent} from './auth/auth.component'
     NgOptimizedImage,
     StoreRouterConnectingModule.forRoot(),
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([MainPageEffects, RecommendationEffects, AuthEffects]),
+    EffectsModule.forRoot([MainPageEffects, RecommendationEffects, AuthEffects, FindWineEffects]),
     ReactiveFormsModule,
     CoreModule,
   ],

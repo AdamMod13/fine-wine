@@ -47,6 +47,10 @@
     border: solid 3px #9b0d3c;
     border-radius: 0.25rem;
   }
+
+  .image-cut-shape {
+    border-radius: 0.5rem 0 70% 0;
+  }
 }
 
 input[data-te-select-input-ref], label[data-te-select-label-ref],
