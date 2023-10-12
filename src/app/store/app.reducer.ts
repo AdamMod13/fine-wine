@@ -6,14 +6,14 @@ import {ActionReducerMap} from '@ngrx/store';
 
 export interface AppState {
   mainPage: fromMainPage.MainPageState;
-  recommendationPage: fromRecommendationForm.RecommendationFormState;
+  recommendation: fromRecommendationForm.RecommendationFormState;
   auth: fromAuth.AuthState;
   findWinePage: fromFindWine.FindWineState;
 }
 
 export const appReducer: ActionReducerMap<AppState, any> = {
   mainPage: fromMainPage.mainPageReducer,
-  recommendationPage: fromRecommendationForm.recommendationReducer,
+  recommendation: fromRecommendationForm.recommendationReducer,
   auth: fromAuth.authReducer,
   findWinePage: fromFindWine.findWineReducer,
 };

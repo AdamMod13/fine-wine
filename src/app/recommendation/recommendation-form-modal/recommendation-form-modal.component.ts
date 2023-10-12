@@ -7,6 +7,8 @@ import * as fromApp from "../../store/app.reducer";
 import * as RecommendationFormActions from "../store/recommendation.action";
 import {WineRecommendationReq} from "../../Models/WineRecommendationReq.model";
 import {SpinnerService} from "../../spinner/spinner.service";
+import {map} from "rxjs/operators";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-recommendation-form-modal',
@@ -19,11 +21,15 @@ export class RecommendationFormModalComponent {
   public wineColorEnum = [WineColorEnum.RED, WineColorEnum.WHITE, WineColorEnum.ROSE, WineColorEnum.SPARKLING];
   public mainCoutriesEnum = MainCoutriesEnum;
   public otherCountriesEnum = OtherCountriesEnum;
+  public basicWineryOptions: string[] = [];
+  public basicVarietyOptions: string[] = [];
 
   public showRecommendationModal: boolean = false;
   public isMorePicked: boolean = false;
   public pickedColors: string[] = [];
   public pickedCountry: string[] = [];
+
+  private subscription: Subscription;
 
   public recommendationForm = new FormGroup({
     wineColors: new FormControl<string[]>([]),
@@ -38,7 +44,16 @@ export class RecommendationFormModalComponent {
   }
 
   initRecommendationForm(): void {
+    this.spinnerService.setLoading(true);
+    this.store.dispatch(new RecommendationFormActions.GetRecommendationModalFilters())
     this.showRecommendationModal = true;
+    this.subscription = this.store
+      .select('recommendation')
+      .pipe(map((recommendationModal) => recommendationModal))
+      .subscribe((recommendationModalState) => {
+        this.basicVarietyOptions.push(...recommendationModalState?.varietiesFilter);
+        this.basicWineryOptions.push(...recommendationModalState?.wineriesFilter);
+      })
   }
 
   selectWineColor(wineColor: string): void {

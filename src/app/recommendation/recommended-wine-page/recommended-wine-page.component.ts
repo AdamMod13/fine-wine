@@ -19,7 +19,7 @@ export class RecommendedWinePageComponent implements OnInit {
 
   ngOnInit() {
     this.subscription = this.store
-      .select('recommendationPage')
+      .select('recommendation')
       .pipe(map((recommendationPageState) => recommendationPageState.recommendedWines))
       .subscribe((wines: Wine[]) => {
         this.recommendedWines = wines;

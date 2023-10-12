@@ -7,6 +7,7 @@ import {Wine} from "../../Models/wine.model";
 import {SpinnerService} from "../../spinner/spinner.service";
 import {Router} from "@angular/router";
 import {map} from "rxjs/operators";
+import {RecommendationModalFiltersRes} from "../../Models/recommendationModalFiltersRes.model";
 
 @Injectable()
 export class RecommendationEffects {
@@ -55,6 +56,25 @@ export class RecommendationEffects {
         map((wines) => {
           return new RecommendationFormActions.SetRecommendations(wines);
         })
+      );
+    }
+  );
+
+  getRecommendationModalFilters = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(RecommendationFormActions.GET_RECOMMENDATION_MODAL_FILTERS),
+        switchMap(() => {
+          return this.http.get<RecommendationModalFiltersRes>(
+            'http://localhost:8080/api/recommendation/get-filters'
+          );
+        }),
+        map((recommendationFilters) => {
+          console.log(recommendationFilters)
+          return new RecommendationFormActions.SetRecommendationModalFilters(recommendationFilters);
+        }),
+        tap(() =>
+          this.spinnerService.setLoading(false)
+        )
       );
     }
   );
