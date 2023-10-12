@@ -5,14 +5,13 @@ import * as FindWineActions from './store/find-wine.action'
 import {map} from "rxjs/operators";
 import {SpinnerService} from "../spinner/spinner.service";
 import {Subscription} from "rxjs";
-import {WinePageRes} from "../Models/winePageRes.model";
 import {Wine} from "../Models/wine.model";
 import {MainCoutriesEnum, OtherCountriesEnum} from "../enums/coutries-enum";
 import {WineColorEnum} from "../enums/wine-color-enum";
-import {BasicProvincesEnum} from "../enums/basic-provinces-enum";
-import {BasicVarietyEnum} from "../enums/basic-variety-enum";
 import {FormControl, FormGroup} from "@angular/forms";
 import {FindWineReq} from "../Models/findWineReq.model";
+import {WinePage} from "../Models/winePage.model";
+import {BasicProvincesEnum} from "../enums/basic-provinces-enum";
 
 @Component({
   selector: 'app-find-wine',
@@ -25,7 +24,8 @@ export class FindWineComponent implements OnInit {
   public mainCoutriesEnum = MainCoutriesEnum;
   public otherCountriesEnum = OtherCountriesEnum;
   public basicProvincesEnum = BasicProvincesEnum;
-  public basicVarietyEnum = BasicVarietyEnum;
+  public basicVarieties: string[] = [];
+  public basicWineries: string[] = [];
 
   public pickedColors: string[] = [];
   public pickedCountries: string[] = [];
@@ -33,8 +33,8 @@ export class FindWineComponent implements OnInit {
   public pickedVarieties: string[] = [];
 
   public pageNumber: number = 0;
-  public wines: Wine[] | null = [];
-  public winePageRes: WinePageRes | null = null;
+  public wines: Wine[] = [];
+  public winePageRes: WinePage | null = null;
   private subscription: Subscription;
   public isMorePicked: boolean = false;
 
@@ -63,8 +63,9 @@ export class FindWineComponent implements OnInit {
       .pipe(map((findWinePageState) => findWinePageState))
       .subscribe((findWineState) => {
         this.winePageRes = findWineState.winePage;
-        this.wines?.push(...findWineState.wines);
-        console.log(this)
+        this.wines.push(...findWineState.wines);
+        this.basicVarieties.push(...findWineState.varieties);
+        this.basicWineries.push(...findWineState.wineries);
       })
   }
 

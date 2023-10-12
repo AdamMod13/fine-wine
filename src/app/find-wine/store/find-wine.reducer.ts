@@ -1,14 +1,18 @@
 import * as FindWineActions from './find-wine.action';
 import {Wine} from "../../Models/wine.model";
-import {WinePageRes} from "../../Models/winePageRes.model";
+import {WinePage} from "../../Models/winePage.model";
 
 export interface FindWineState {
-  winePage: WinePageRes | null;
+  winePage: WinePage | null;
+  varieties: string[];
+  wineries: string[];
   wines: Wine[];
 }
 
 const initialState: FindWineState = {
   winePage: null,
+  varieties: [],
+  wineries: [],
   wines: [],
 };
 
@@ -18,11 +22,14 @@ export function findWineReducer(
 ): FindWineState {
   switch (action.type) {
     case FindWineActions.SET_WINE_PAGE:
-      if (action.payload.content) {
+      if (action.payload.winePage) {
+        console.log(action.payload)
         return {
           ...state,
-          winePage: action.payload,
-          wines: action.payload.content
+          winePage: action.payload.winePage,
+          wines: action.payload.winePage.content,
+          varieties: action.payload.randomVarieties,
+          wineries: action.payload.randomWineries,
         }
       } else {
         return {

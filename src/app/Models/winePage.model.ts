@@ -1,6 +1,6 @@
 import {Wine} from "./wine.model";
 
-export class WinePageRes {
+export class WinePage {
   public content: Wine[];
   public empty: boolean;
   public first: boolean;
