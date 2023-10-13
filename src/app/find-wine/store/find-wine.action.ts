@@ -5,6 +5,7 @@ import {FindWineRes} from "../../Models/findWineRes.model";
 export const FETCH_WINE_PAGE = "[Find Wine] Fetch wine page";
 export const SET_WINE_PAGE = "[Find Wine] Set wine page";
 export const SET_RANDOM_VARIETIES = "[Find Wine] Set random varieties";
+export const CLEAR_WINES = "[Find Wine] Clear wines";
 
 export class FetchWinePage implements Action {
   readonly type = FETCH_WINE_PAGE;
@@ -27,7 +28,15 @@ export class SetRandomVarieties implements Action {
   }
 }
 
+export class ClearWines implements Action {
+  readonly type = CLEAR_WINES;
+
+  constructor() {
+  }
+}
+
 export type FindWineActions =
   | FetchWinePage
   | SetWinePage
-  | SetRandomVarieties;
+  | SetRandomVarieties
+  | ClearWines;

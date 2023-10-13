@@ -23,7 +23,6 @@ export class RecommendedWinePageComponent implements OnInit {
       .pipe(map((recommendationPageState) => recommendationPageState.recommendedWines))
       .subscribe((wines: Wine[]) => {
         this.recommendedWines = wines;
-        console.log(this)
       })
   }
 }

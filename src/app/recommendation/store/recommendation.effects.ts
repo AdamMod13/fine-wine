@@ -69,7 +69,6 @@ export class RecommendationEffects {
           );
         }),
         map((recommendationFilters) => {
-          console.log(recommendationFilters)
           return new RecommendationFormActions.SetRecommendationModalFilters(recommendationFilters);
         }),
         tap(() =>

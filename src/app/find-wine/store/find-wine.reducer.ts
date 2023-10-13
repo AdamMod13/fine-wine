@@ -23,11 +23,11 @@ export function findWineReducer(
   switch (action.type) {
     case FindWineActions.SET_WINE_PAGE:
       if (action.payload.winePage) {
-        console.log(action.payload)
+        let newWines = [...state.wines, ...action.payload.winePage.content]
         return {
           ...state,
           winePage: action.payload.winePage,
-          wines: action.payload.winePage.content,
+          wines: newWines,
           varieties: action.payload.randomVarieties,
           wineries: action.payload.randomWineries,
         }
@@ -36,6 +36,11 @@ export function findWineReducer(
           ...state,
           wines: [],
         };
+      }
+    case FindWineActions.CLEAR_WINES:
+      return {
+        ...state,
+        wines: []
       }
     default:
       return state;
