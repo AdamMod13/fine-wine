@@ -65,6 +65,27 @@ div[data-te-select-form-outline-ref] span {
   top: 17px;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #b0adad;
+  /*border-radius: 5px;*/
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #5C001E;
+  /*border-radius: 5px;*/
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2e000f;
+}
+
 html, body {
   height: 100%;
 }

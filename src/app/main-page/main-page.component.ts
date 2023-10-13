@@ -31,7 +31,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   addToFavourites(wine: Wine) {
-
+    this.store.dispatch(new MainPageActions.AddWineToFavourites(wine));
   }
 
   ngOnDestroy() {

@@ -4,6 +4,7 @@ import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
+import * as MainPageActions from '../../main-page/store/main-page.action';
 
 @Component({
   selector: 'app-recommended-wine-page',
@@ -24,5 +25,9 @@ export class RecommendedWinePageComponent implements OnInit {
       .subscribe((wines: Wine[]) => {
         this.recommendedWines = wines;
       })
+  }
+
+  addToFavourites(wine: Wine) {
+    this.store.dispatch(new MainPageActions.AddWineToFavourites(wine));
   }
 }

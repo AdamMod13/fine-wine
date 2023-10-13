@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as fromApp from "../store/app.reducer";
-import * as FindWineActions from './store/find-wine.action'
+import * as FindWineActions from './store/find-wine.action';
+import * as MainPageActions from '../main-page/store/main-page.action';
 import {map} from "rxjs/operators";
 import {SpinnerService} from "../spinner/spinner.service";
 import {Subscription} from "rxjs";
@@ -145,4 +146,7 @@ export class FindWineComponent implements OnInit {
     }));
   }
 
+  addToFavourites(wine: Wine) {
+    this.store.dispatch(new MainPageActions.AddWineToFavourites(wine));
+  }
 }
