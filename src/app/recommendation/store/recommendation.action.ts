@@ -10,6 +10,8 @@ export const SAVE_CURRENT_RECOMMENDATIONS = '[Recommendation Form] Save current 
 export const GET_CURRENT_RECOMMENDATIONS = '[Recommendation Form] Get current recommendations';
 export const GET_RECOMMENDATION_MODAL_FILTERS = '[Recommendation Form] Get recommendation modal filters';
 export const SET_RECOMMENDATION_MODAL_FILTERS = '[Recommendation Form] Set recommendation modal filters';
+export const SEARCH_WINERY_OR_VARIETY = '[Recommendation Form] Search winery or variety';
+export const SET_WINERY_OR_VARIETY = '[Recommendation Form] Set winery or variety';
 
 export class FetchRecommendations implements Action {
   readonly type = FETCH_RECOMMENDATIONS;
@@ -53,6 +55,20 @@ export class SetRecommendationModalFilters implements Action {
   }
 }
 
+export class SearchWineryOrVariety implements Action {
+  readonly type = SEARCH_WINERY_OR_VARIETY;
+
+  constructor(public payload: { value: string, type: string }) {
+  }
+}
+
+export class SetWineryOrVariety implements Action {
+  readonly type = SET_WINERY_OR_VARIETY;
+
+  constructor(public payload: RecommendationModalFiltersRes) {
+  }
+}
+
 export class ClearRecommendations implements Action {
   readonly type = CLEAR_RECOMMENDATIONS;
 }
@@ -64,4 +80,6 @@ export type RecommendationFormActions =
   | SaveCurrentRecommendations
   | GetCurrentRecommendations
   | GetRecommendationModalFilters
-  | SetRecommendationModalFilters;
+  | SetRecommendationModalFilters
+  | SearchWineryOrVariety
+  | SetWineryOrVariety;

@@ -19,6 +19,11 @@ const appRoutes: Routes = [
     path: 'recommendations',
     loadChildren: () =>
       import('./recommendation/recommendation.module').then((m) => m.RecommendationModule)
+  },
+  {
+    path: 'wishlist',
+    loadChildren: () =>
+      import('./wishlist/wishlist.module').then((m) => m.WishlistModule)
   }
 ];
 

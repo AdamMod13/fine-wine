@@ -1,5 +1,5 @@
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {switchMap, tap} from 'rxjs';
+import {debounceTime, switchMap, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import * as RecommendationFormActions from './recommendation.action';
@@ -74,6 +74,23 @@ export class RecommendationEffects {
         tap(() =>
           this.spinnerService.setLoading(false)
         )
+      );
+    }
+  );
+
+  searchWineryOrVariety = createEffect(() => {
+      return this.actions$.pipe(
+        debounceTime(500),
+        ofType(RecommendationFormActions.SEARCH_WINERY_OR_VARIETY),
+        switchMap((searchWineryOrVarietyRes: RecommendationFormActions.SearchWineryOrVariety) => {
+          return this.http.post<RecommendationModalFiltersRes>(
+            'http://localhost:8080/api/recommendation/search-winery-or-variety',
+            searchWineryOrVarietyRes.payload
+          );
+        }),
+        map((wineryOrVarietyRes) => {
+          return new RecommendationFormActions.SetWineryOrVariety(wineryOrVarietyRes);
+        })
       );
     }
   );
