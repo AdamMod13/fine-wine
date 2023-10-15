@@ -1,13 +1,14 @@
 import {Action} from '@ngrx/store';
 import {FavouritePageReq} from "../../Models/favouritePageReq.model";
 import {Wine} from "../../Models/wine.model";
-import {AddWineToFavouriteReq} from "../../Models/addWineToFavouriteReq.model";
+import {WishlistReq} from "../../Models/WishlistReq.model";
 
 export const FETCH_FAVOURITE_PAGE = '[Wishlist] Fetch favourite page';
 export const SET_FAVOURITE_PAGE = '[Wishlist] Set favourite page';
 export const ADD_WINE_TO_FAVOURITES = '[Wishlist] Add wine to favourites';
 export const FETCH_ALL_FAVOURITES = '[Wishlist] Fetch all favourites';
 export const SET_ALL_FAVOURITES = '[Wishlist] Set all favourites';
+export const DELETE_WINE_FROM_FAVOURITES = '[Wishlist] Delete wine from favourites';
 
 export class FetchFavouritePage implements Action {
   readonly type = FETCH_FAVOURITE_PAGE;
@@ -26,7 +27,14 @@ export class FetchAllFavourites implements Action {
 export class AddWineToFavourites implements Action {
   readonly type = ADD_WINE_TO_FAVOURITES;
 
-  constructor(public payload: AddWineToFavouriteReq) {
+  constructor(public payload: WishlistReq) {
+  }
+}
+
+export class DeleteWineFromFavourites implements Action {
+  readonly type = DELETE_WINE_FROM_FAVOURITES;
+
+  constructor(public payload: WishlistReq) {
   }
 }
 
@@ -50,4 +58,5 @@ export type WishlistActions =
   | SetFavouritePage
   | AddWineToFavourites
   | FetchAllFavourites
-  | SetAllFavourites;
+  | SetAllFavourites
+  | DeleteWineFromFavourites;

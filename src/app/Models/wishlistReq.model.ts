@@ -1,6 +1,6 @@
 import {Wine} from "./wine.model";
 
-export class AddWineToFavouriteReq {
+export class WishlistReq {
   public userId: string;
   public wine: Wine;
 }

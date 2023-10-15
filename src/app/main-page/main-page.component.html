@@ -72,14 +72,16 @@
     <div *ngFor="let wine of bestRandomWines; let i = index"
          class="w-1/4 pt-3 shadow-md rounded-xl h-[35rem] bg-light text-light-bg flex flex-col justify-between relative
          group hover:shadow-2xl transition duration-200 ease-in-out">
-      <button class="absolute text-black top-3 right-3 z-10" (click)="addToFavourites(wine)">
-        <ng-container *ngIf="checkIfLiked(wine.id);else notLikedWine">
+      <ng-container *ngIf="checkIfLiked(wine.id);else notLikedWine">
+        <button class="absolute text-black top-3 right-3 z-10" (click)="deleteFromFavourites(wine)">
           <heart-solid-icon></heart-solid-icon>
-        </ng-container>
-        <ng-template #notLikedWine>
+        </button>
+      </ng-container>
+      <ng-template #notLikedWine>
+        <button class="absolute text-black top-3 right-3 z-10" (click)="addToFavourites(wine)">
           <heart-outline-icon></heart-outline-icon>
-        </ng-template>
-      </button>
+        </button>
+      </ng-template>
       <img [src]="'./assets/Images/' + wine.wineColor + '_bottle.png'" alt="..."
            class="h-3/6 object-contain m-3 group-hover:scale-110 transition duration-200 ease-in-out"/>
       <div

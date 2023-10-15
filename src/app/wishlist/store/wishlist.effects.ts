@@ -53,6 +53,18 @@ export class WishlistEffects {
     ), {dispatch: false}
   );
 
+  deleteWineFromFavourites = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WishlistActions.DELETE_WINE_FROM_FAVOURITES),
+      switchMap((wineToDeleteReq: WishlistActions.DeleteWineFromFavourites) => {
+        return this.http.post<void>(
+          'http://localhost:8080/api/wine/delete-favourite-wine',
+          wineToDeleteReq.payload
+        );
+      }),
+    ), {dispatch: false}
+  );
+
   constructor(private actions$: Actions, private http: HttpClient, private spinnerService: SpinnerService) {
   }
 }

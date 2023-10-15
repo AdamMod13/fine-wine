@@ -8,7 +8,7 @@ import * as MainPageActions from "./store/main-page.action";
 import {SpinnerService} from "../spinner/spinner.service";
 import {User} from "../auth/user.model";
 import * as WishlistActions from "../wishlist/store/wishlist.action";
-import {AddWineToFavouriteReq} from "../Models/addWineToFavouriteReq.model";
+import {WishlistReq} from "../Models/WishlistReq.model";
 
 @Component({
   selector: 'app-main-page',
@@ -56,11 +56,21 @@ export class MainPageComponent implements OnInit, OnDestroy {
   addToFavourites(wine: Wine) {
     if (this.user) {
       console.log(wine)
-      const saveWineReq: AddWineToFavouriteReq = {
+      const saveWineReq: WishlistReq = {
         userId: this.user.id,
         wine: wine
       }
       this.store.dispatch(new WishlistActions.AddWineToFavourites(saveWineReq));
+    }
+  }
+
+  deleteFromFavourites(wine: Wine) {
+    if (this.user) {
+      const saveWineReq: WishlistReq = {
+        userId: this.user.id,
+        wine: wine
+      }
+      this.store.dispatch(new WishlistActions.DeleteWineFromFavourites(saveWineReq));
     }
   }
 
