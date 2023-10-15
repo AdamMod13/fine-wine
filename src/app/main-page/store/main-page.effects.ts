@@ -26,18 +26,6 @@ export class MainPageEffects {
     )
   );
 
-  addWineToFavourites = createEffect(() =>
-    this.actions$.pipe(
-      ofType(MainPageActions.ADD_WINE_TO_FAVOURITES),
-      tap((wineToAdd: MainPageActions.AddWineToFavourites) => {
-        return this.http.post<Wine>(
-          'http://localhost:8080/api/wine/add-wine-to-favourites',
-          wineToAdd.payload
-        );
-      })
-    ), {dispatch: true}
-  );
-
   constructor(private actions$: Actions, private http: HttpClient, private spinnerService: SpinnerService) {
   }
 }

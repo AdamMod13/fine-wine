@@ -25,6 +25,34 @@ export class WishlistEffects {
     )
   );
 
+  fetchAllFavourites = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WishlistActions.FETCH_ALL_FAVOURITES),
+      switchMap((favouritePageReq: WishlistActions.FetchAllFavourites) => {
+        return this.http.post<Wine[]>(
+          `http://localhost:8080/api/wine/get-all-favourites`,
+          favouritePageReq.payload
+        )
+      }),
+      map((favouritePageRes: Wine[]) => {
+        return new WishlistActions.SetAllFavourites(favouritePageRes);
+      }),
+      tap(() => this.spinnerService.setLoading(false))
+    )
+  );
+
+  addWineToFavourites = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WishlistActions.ADD_WINE_TO_FAVOURITES),
+      switchMap((wineToAddReq: WishlistActions.AddWineToFavourites) => {
+        return this.http.post<void>(
+          'http://localhost:8080/api/wine/save-favourite-wine',
+          wineToAddReq.payload
+        );
+      })
+    ), {dispatch: false}
+  );
+
   constructor(private actions$: Actions, private http: HttpClient, private spinnerService: SpinnerService) {
   }
 }

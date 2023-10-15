@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as fromApp from "../store/app.reducer";
 import * as FindWineActions from './store/find-wine.action';
-import * as MainPageActions from '../main-page/store/main-page.action';
 import {map} from "rxjs/operators";
 import {SpinnerService} from "../spinner/spinner.service";
 import {Subscription} from "rxjs";
@@ -12,6 +11,8 @@ import {WineColorEnum} from "../enums/wine-color-enum";
 import {FormControl, FormGroup} from "@angular/forms";
 import {FindWineReq} from "../Models/findWineReq.model";
 import {WinePage} from "../Models/winePage.model";
+import * as WishlistActions from "../wishlist/store/wishlist.action";
+import {User} from "../auth/user.model";
 
 @Component({
   selector: 'app-find-wine',
@@ -37,7 +38,10 @@ export class FindWineComponent implements OnInit {
   public winePageRes: WinePage | null = null;
   public isMorePicked: boolean = false;
 
+  public user: User;
+
   private subscription: Subscription;
+  private authSubscription: Subscription;
 
   public filterForm = new FormGroup({
     wineColors: new FormControl<string[]>([]),
@@ -66,6 +70,14 @@ export class FindWineComponent implements OnInit {
         this.wines = findWineState.wines;
         this.basicVarieties = findWineState.varieties;
         this.basicWineries = findWineState.wineries;
+      })
+    this.authSubscription = this.store
+      .select('auth')
+      .pipe(map((auth) => auth))
+      .subscribe((auth) => {
+        if (auth.user) {
+          this.user = auth.user;
+        }
       })
   }
 
@@ -147,6 +159,6 @@ export class FindWineComponent implements OnInit {
   }
 
   addToFavourites(wine: Wine) {
-    this.store.dispatch(new MainPageActions.AddWineToFavourites(wine));
+    this.store.dispatch(new WishlistActions.AddWineToFavourites({userId: this.user.id, wine: wine}));
   }
 }

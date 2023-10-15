@@ -6,6 +6,9 @@ import {Subscription} from "rxjs";
 import {map} from "rxjs/operators";
 import * as MainPageActions from "./store/main-page.action";
 import {SpinnerService} from "../spinner/spinner.service";
+import {User} from "../auth/user.model";
+import * as WishlistActions from "../wishlist/store/wishlist.action";
+import {AddWineToFavouriteReq} from "../Models/addWineToFavouriteReq.model";
 
 @Component({
   selector: 'app-main-page',
@@ -14,7 +17,11 @@ import {SpinnerService} from "../spinner/spinner.service";
 })
 export class MainPageComponent implements OnInit, OnDestroy {
   public bestRandomWines: Wine[] = [];
-  private subscription: Subscription;
+  public favouriteWinesIds: number[] = [];
+  private mainPageSubscription: Subscription;
+  private authSubscription: Subscription;
+  private favouritesSubscription: Subscription;
+  public user: User;
 
   constructor(private store: Store<fromApp.AppState>, private spinnerService: SpinnerService) {
   }
@@ -22,19 +29,47 @@ export class MainPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.spinnerService.setLoading(true);
     this.store.dispatch(new MainPageActions.FetchBestRandomWines());
-    this.subscription = this.store
+    this.mainPageSubscription = this.store
       .select('mainPage')
       .pipe(map((mainPageState) => mainPageState.bestRandomWines))
       .subscribe((wines: Wine[]) => {
         this.bestRandomWines = wines;
       })
+    this.authSubscription = this.store
+      .select('auth')
+      .pipe(map((auth) => auth))
+      .subscribe((auth) => {
+        if (auth.user) {
+          this.user = auth.user;
+          this.store.dispatch(new WishlistActions.FetchAllFavourites(this.user.id))
+        }
+      })
+    this.favouritesSubscription = this.store
+      .select('wishlistPage')
+      .pipe(map((favourites) => favourites))
+      .subscribe((favouriteWines) => {
+        console.log(favouriteWines)
+        this.favouriteWinesIds = favouriteWines?.favouriteWine.map(wine => wine.id);
+      })
   }
 
   addToFavourites(wine: Wine) {
-    this.store.dispatch(new MainPageActions.AddWineToFavourites(wine));
+    if (this.user) {
+      console.log(wine)
+      const saveWineReq: AddWineToFavouriteReq = {
+        userId: this.user.id,
+        wine: wine
+      }
+      this.store.dispatch(new WishlistActions.AddWineToFavourites(saveWineReq));
+    }
+  }
+
+  checkIfLiked(wineId: number) {
+    return this.favouriteWinesIds.some(savedWineId => savedWineId === wineId);
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.authSubscription.unsubscribe();
+    this.mainPageSubscription.unsubscribe();
   }
 }

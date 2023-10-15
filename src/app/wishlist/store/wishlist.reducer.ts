@@ -15,6 +15,7 @@ export function wishlistReducer(
 ): WishlistPageState {
   switch (action.type) {
     case WishlistActions.SET_FAVOURITE_PAGE:
+      console.log("HERE")
       if (action.payload) {
         return {
           ...state,
@@ -25,6 +26,16 @@ export function wishlistReducer(
           ...state,
           favouriteWine: [],
         };
+      }
+    case WishlistActions.SET_ALL_FAVOURITES:
+      return {
+        ...state,
+        favouriteWine: action.payload
+      }
+    case WishlistActions.ADD_WINE_TO_FAVOURITES:
+      return {
+        ...state,
+        favouriteWine: [...state.favouriteWine, action.payload.wine]
       }
     default:
       return state;

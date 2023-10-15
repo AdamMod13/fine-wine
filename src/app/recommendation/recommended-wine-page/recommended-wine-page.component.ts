@@ -4,7 +4,8 @@ import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
-import * as MainPageActions from '../../main-page/store/main-page.action';
+import {User} from "../../auth/user.model";
+import * as WishlistActions from "../../wishlist/store/wishlist.action";
 
 @Component({
   selector: 'app-recommended-wine-page',
@@ -14,6 +15,8 @@ import * as MainPageActions from '../../main-page/store/main-page.action';
 export class RecommendedWinePageComponent implements OnInit {
   public recommendedWines: Wine[] = [];
   private subscription: Subscription;
+  private authSubscription: Subscription;
+  public user: User;
 
   constructor(private store: Store<fromApp.AppState>) {
   }
@@ -25,9 +28,17 @@ export class RecommendedWinePageComponent implements OnInit {
       .subscribe((wines: Wine[]) => {
         this.recommendedWines = wines;
       })
+    this.authSubscription = this.store
+      .select('auth')
+      .pipe(map((auth) => auth))
+      .subscribe((auth) => {
+        if (auth.user) {
+          this.user = auth.user;
+        }
+      })
   }
 
   addToFavourites(wine: Wine) {
-    this.store.dispatch(new MainPageActions.AddWineToFavourites(wine));
+    this.store.dispatch(new WishlistActions.AddWineToFavourites({userId: this.user.id, wine: wine}));
   }
 }
