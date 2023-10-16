@@ -145,10 +145,18 @@
         <div *ngFor="let wine of wines; let i = index"
              class="w-full flex min-h-[18rem] flex-row rounded-lg shadow-lg hover:shadow-2xl border-gray-300 border-solid border-2
            transition-all duration-300 ease-in-out hover:scale-[1.01] relative">
-          <heart-outline-icon
-            class="absolute text-black top-3 right-3"
-            (click)="addToFavourites(wine)">
-          </heart-outline-icon>
+          <ng-container *ngIf="wishlistService.checkIfLiked(wine.id);else notLikedWine">
+            <button class="absolute text-black top-3 right-3 z-10"
+                    (click)="wishlistService.deleteFromFavourites(wine)">
+              <heart-solid-icon></heart-solid-icon>
+            </button>
+          </ng-container>
+          <ng-template #notLikedWine>
+            <button class="absolute text-black top-3 right-3 z-10"
+                    (click)="wishlistService.addToFavourites(wine)">
+              <heart-outline-icon></heart-outline-icon>
+            </button>
+          </ng-template>
           <div class="w-1/4 relative">
             <div class="absolute z-0 h-full">
               <img alt="wine_picture" [src]="'./assets/Images/winery_' + ((i%2)+1) + '.jpg'"

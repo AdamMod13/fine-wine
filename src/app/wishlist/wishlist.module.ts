@@ -5,6 +5,7 @@ import {NgHeroiconsModule} from "@dimaslz/ng-heroicons";
 import {CommonModule} from "@angular/common";
 import {WishlistComponent} from "./wishlist.component";
 import {WishlistRoutingModule} from "./wishlist-routing.module";
+import {CoreModule} from "../core.module";
 
 @NgModule({
   declarations: [WishlistComponent],
@@ -15,6 +16,7 @@ import {WishlistRoutingModule} from "./wishlist-routing.module";
     WishlistRoutingModule,
     FormsModule,
     CommonModule,
+    CoreModule
   ],
   exports: [],
   providers: [],

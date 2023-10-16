@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {MainCoutriesEnum, OtherCountriesEnum} from "../../enums/coutries-enum";
 import {WineColorEnum} from "../../enums/wine-color-enum";
 import {FormControl, FormGroup, NgForm} from "@angular/forms";
@@ -6,7 +6,7 @@ import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import * as RecommendationFormActions from "../store/recommendation.action";
 import {WineRecommendationReq} from "../../Models/WineRecommendationReq.model";
-import {SpinnerService} from "../../spinner/spinner.service";
+import {SpinnerService} from "../../Shared/spinner/spinner.service";
 import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
 
@@ -15,7 +15,7 @@ import {Subscription} from "rxjs";
   templateUrl: './recommendation-form-modal.component.html',
   styleUrls: ['./recommendation-form-modal.component.css']
 })
-export class RecommendationFormModalComponent {
+export class RecommendationFormModalComponent implements OnDestroy {
   @ViewChild('rf') private recommendationFormDirective: NgForm;
 
   public wineColorEnum = [WineColorEnum.RED, WineColorEnum.WHITE, WineColorEnum.ROSE, WineColorEnum.SPARKLING];
@@ -51,7 +51,6 @@ export class RecommendationFormModalComponent {
   }
 
   initRecommendationForm(): void {
-    this.spinnerService.setLoading(true);
     this.initSelectListeners();
     this.store.dispatch(new RecommendationFormActions.GetRecommendationModalFilters())
     this.showRecommendationModal = true;
@@ -157,7 +156,6 @@ export class RecommendationFormModalComponent {
   }
 
   onSubmitRecommendationForm(): void {
-    this.spinnerService.setLoading(true);
     this.pickedCountry = this.pickedCountry.map(country => {
       return (country.charAt(0).toUpperCase() + country.slice(1))
     })
@@ -186,5 +184,9 @@ export class RecommendationFormModalComponent {
     this.isMorePicked = false;
 
     this.recommendationForm.reset({maxPrice: null, points: 85});
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
   }
 }

@@ -1,12 +1,12 @@
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {debounceTime, switchMap, tap} from 'rxjs';
+import {debounceTime, switchMap, tap, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import * as RecommendationFormActions from './recommendation.action';
 import {Wine} from "../../Models/wine.model";
-import {SpinnerService} from "../../spinner/spinner.service";
+import {SpinnerService} from "../../Shared/spinner/spinner.service";
 import {Router} from "@angular/router";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {RecommendationModalFiltersRes} from "../../Models/recommendationModalFiltersRes.model";
 
 @Injectable()
@@ -26,6 +26,11 @@ export class RecommendationEffects {
       tap(() => {
         this.spinnerService.setLoading(false);
         this.router.navigate(['/recommendations'])
+      }),
+      catchError(() => {
+        const errorMessage = 'An error occurred while fetching recommendations.';
+        this.spinnerService.setLoading(false);
+        return throwError(errorMessage);
       })
     ),
   );
@@ -41,6 +46,11 @@ export class RecommendationEffects {
       }),
       map(() => {
         return new RecommendationFormActions.GetCurrentRecommendations();
+      }),
+      catchError(() => {
+        const errorMessage = 'An error occurred while saving recommendation.';
+        this.spinnerService.setLoading(false);
+        return throwError(errorMessage);
       })
     ),
   );
@@ -55,6 +65,11 @@ export class RecommendationEffects {
         }),
         map((wines) => {
           return new RecommendationFormActions.SetRecommendations(wines);
+        }),
+        catchError(() => {
+          const errorMessage = 'An error occurred fetching current recommendation.';
+          this.spinnerService.setLoading(false);
+          return throwError(errorMessage);
         })
       );
     }
@@ -64,6 +79,7 @@ export class RecommendationEffects {
       return this.actions$.pipe(
         ofType(RecommendationFormActions.GET_RECOMMENDATION_MODAL_FILTERS),
         switchMap(() => {
+          this.spinnerService.setLoading(true);
           return this.http.get<RecommendationModalFiltersRes>(
             'http://localhost:8080/api/recommendation/get-filters'
           );
@@ -73,7 +89,12 @@ export class RecommendationEffects {
         }),
         tap(() =>
           this.spinnerService.setLoading(false)
-        )
+        ),
+        catchError(() => {
+          const errorMessage = 'An error occurred fetching getting modal filters.';
+          this.spinnerService.setLoading(false);
+          return throwError(errorMessage);
+        })
       );
     }
   );

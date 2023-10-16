@@ -15,7 +15,7 @@ module.exports = {
       winery5: "url('./assets/Images/winery_5.jpg')",
       pouringWine: "url('./assets/Images/pouring_wine.png')",
       wineBottles: "url('./assets/Images/wine_bottles.jpg')",
-      wineRack: "url('./assets/Images/wine_rack.jpg')"
+      wineRack: "url('./assets/Images/wine_rack.jpg')",
     },
     extend: {
       colors: {

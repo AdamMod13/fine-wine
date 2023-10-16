@@ -5,7 +5,7 @@ import {Store} from '@ngrx/store';
 import * as fromApp from '../store/app.reducer';
 import * as AuthActions from './store/auth.actions';
 import {ErrorModalComponent} from "../Shared/error-modal/error-modal.component";
-import {SpinnerService} from "../spinner/spinner.service";
+import {SpinnerService} from "../Shared/spinner/spinner.service";
 
 @Component({
   selector: 'app-auth',

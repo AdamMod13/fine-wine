@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as fromApp from "../store/app.reducer";
-import {SpinnerService} from "../spinner/spinner.service";
+import {SpinnerService} from "../Shared/spinner/spinner.service";
 import {Subscription} from "rxjs";
 import * as WishlistActions from "./store/wishlist.action";
 import {map} from "rxjs/operators";
@@ -14,7 +14,7 @@ import {User} from "../auth/user.model";
   templateUrl: './wishlist.component.html',
   styleUrls: ['./wishlist.component.css']
 })
-export class WishlistComponent implements OnInit {
+export class WishlistComponent implements OnInit, OnDestroy {
   public pageNumber: number = 0;
   public favouritesWines: Wine[] = [];
   public favouritesPageRes: WinePage | null = null;
@@ -27,7 +27,6 @@ export class WishlistComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.spinnerService.setLoading(true);
     this.authSubscription = this.store
       .select('auth')
       .pipe(map(auth => auth))
@@ -46,11 +45,23 @@ export class WishlistComponent implements OnInit {
       .select('wishlistPage')
       .pipe(map(wishlist => wishlist))
       .subscribe((wishlist) => {
+        console.log(wishlist)
         this.favouritesWines = [...wishlist.favouriteWine];
       })
   }
 
   loadMore() {
-    this.store.dispatch(new WishlistActions.FetchFavouritePage({pageNumber: this.pageNumber, userId: this.user.id}))
+    this.store.dispatch(new WishlistActions.FetchFavouritePage({pageNumber: this.pageNumber, userId: this.user.id}));
+    this.pageNumber += 1;
+  }
+
+  addToFavourites(wine: Wine) {
+    this.store.dispatch(new WishlistActions.AddWineToFavourites({userId: this.user.id, wine: wine}));
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(new WishlistActions.ClearFavourites());
+    this.authSubscription.unsubscribe();
+    this.wishlistSubscription.unsubscribe()
   }
 }

@@ -3,7 +3,7 @@ import {switchMap, tap, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {SpinnerService} from "../../spinner/spinner.service";
+import {SpinnerService} from "../../Shared/spinner/spinner.service";
 import * as FindWineActions from "./find-wine.action";
 import {FindWineRes} from "../../Models/findWineRes.model";
 

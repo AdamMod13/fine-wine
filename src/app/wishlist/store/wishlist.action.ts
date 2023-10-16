@@ -9,6 +9,7 @@ export const ADD_WINE_TO_FAVOURITES = '[Wishlist] Add wine to favourites';
 export const FETCH_ALL_FAVOURITES = '[Wishlist] Fetch all favourites';
 export const SET_ALL_FAVOURITES = '[Wishlist] Set all favourites';
 export const DELETE_WINE_FROM_FAVOURITES = '[Wishlist] Delete wine from favourites';
+export const CLEAR_FAVOURITES = '[Wishlist] Clear favourites';
 
 export class FetchFavouritePage implements Action {
   readonly type = FETCH_FAVOURITE_PAGE;
@@ -52,6 +53,12 @@ export class SetAllFavourites implements Action {
   }
 }
 
+export class ClearFavourites implements Action {
+  readonly type = CLEAR_FAVOURITES;
+
+  constructor() {
+  }
+}
 
 export type WishlistActions =
   | FetchFavouritePage
@@ -59,4 +66,5 @@ export type WishlistActions =
   | AddWineToFavourites
   | FetchAllFavourites
   | SetAllFavourites
-  | DeleteWineFromFavourites;
+  | DeleteWineFromFavourites
+  | ClearFavourites;

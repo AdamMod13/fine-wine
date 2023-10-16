@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as fromApp from "../store/app.reducer";
 import * as FindWineActions from './store/find-wine.action';
 import {map} from "rxjs/operators";
-import {SpinnerService} from "../spinner/spinner.service";
+import {SpinnerService} from "../Shared/spinner/spinner.service";
 import {Subscription} from "rxjs";
 import {Wine} from "../Models/wine.model";
 import {MainCoutriesEnum, OtherCountriesEnum} from "../enums/coutries-enum";
@@ -13,13 +13,14 @@ import {FindWineReq} from "../Models/findWineReq.model";
 import {WinePage} from "../Models/winePage.model";
 import * as WishlistActions from "../wishlist/store/wishlist.action";
 import {User} from "../auth/user.model";
+import {WishlistService} from "../wishlist/wishlist.service";
 
 @Component({
   selector: 'app-find-wine',
   templateUrl: './find-wine.component.html',
   styleUrls: ['./find-wine.component.css']
 })
-export class FindWineComponent implements OnInit {
+export class FindWineComponent implements OnInit, OnDestroy {
 
   public wineColorEnum = [WineColorEnum.RED, WineColorEnum.WHITE, WineColorEnum.ROSE, WineColorEnum.SPARKLING];
   public mainCoutriesEnum = MainCoutriesEnum;
@@ -53,7 +54,10 @@ export class FindWineComponent implements OnInit {
     sortOrder: new FormControl(''),
   })
 
-  constructor(private store: Store<fromApp.AppState>, private spinnerService: SpinnerService) {
+  constructor(
+    private store: Store<fromApp.AppState>,
+    private spinnerService: SpinnerService,
+    public wishlistService: WishlistService) {
   }
 
   ngOnInit() {
@@ -130,7 +134,6 @@ export class FindWineComponent implements OnInit {
 
   applyFilters() {
     this.pageNumber = 0;
-    this.spinnerService.setLoading(true);
     this.filterForm.controls.countries.setValue(this.pickedCountries.map(
       country => country.charAt(0).toUpperCase() + country.slice(1)
     ));
@@ -151,7 +154,6 @@ export class FindWineComponent implements OnInit {
 
   loadMore() {
     this.pageNumber += 1;
-    this.spinnerService.setLoading(true);
     this.store.dispatch(new FindWineActions.FetchWinePage({
       pageNumber: this.pageNumber,
       findWineReq: this.filterForm.value as FindWineReq
@@ -160,5 +162,11 @@ export class FindWineComponent implements OnInit {
 
   addToFavourites(wine: Wine) {
     this.store.dispatch(new WishlistActions.AddWineToFavourites({userId: this.user.id, wine: wine}));
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(new WishlistActions.ClearFavourites());
+    this.authSubscription.unsubscribe();
+    this.subscription.unsubscribe()
   }
 }

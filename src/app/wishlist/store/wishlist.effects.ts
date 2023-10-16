@@ -1,9 +1,9 @@
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {switchMap, tap} from 'rxjs';
+import {switchMap, tap, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {SpinnerService} from "../../spinner/spinner.service";
+import {SpinnerService} from "../../Shared/spinner/spinner.service";
 import * as WishlistActions from "./wishlist.action";
 import {Wine} from "../../Models/wine.model";
 
@@ -13,6 +13,7 @@ export class WishlistEffects {
     this.actions$.pipe(
       ofType(WishlistActions.FETCH_FAVOURITE_PAGE),
       switchMap((favouritePageReq: WishlistActions.FetchFavouritePage) => {
+        this.spinnerService.setLoading(true);
         return this.http.post<Wine[]>(
           `http://localhost:8080/api/wine/get-favourites-wine-page/${favouritePageReq.payload.pageNumber}`,
           favouritePageReq.payload.userId
@@ -21,7 +22,12 @@ export class WishlistEffects {
       map((favouritePageRes: Wine[]) => {
         return new WishlistActions.SetFavouritePage(favouritePageRes);
       }),
-      tap(() => this.spinnerService.setLoading(false))
+      tap(() => this.spinnerService.setLoading(false)),
+      catchError(() => {
+        const errorMessage = 'An error occurred while fetching saved wines page.';
+        this.spinnerService.setLoading(false);
+        return throwError(errorMessage);
+      }),
     )
   );
 
@@ -37,7 +43,11 @@ export class WishlistEffects {
       map((favouritePageRes: Wine[]) => {
         return new WishlistActions.SetAllFavourites(favouritePageRes);
       }),
-      tap(() => this.spinnerService.setLoading(false))
+      catchError(() => {
+        const errorMessage = 'An error occurred while fetching all saved wines.';
+        this.spinnerService.setLoading(false);
+        return throwError(errorMessage);
+      }),
     )
   );
 
@@ -49,6 +59,12 @@ export class WishlistEffects {
           'http://localhost:8080/api/wine/save-favourite-wine',
           wineToAddReq.payload
         );
+      }),
+      tap(() => this.spinnerService.setLoading(false)),
+      catchError(() => {
+        const errorMessage = 'An error occurred while adding wine to favourites.';
+        this.spinnerService.setLoading(false);
+        return throwError(errorMessage);
       })
     ), {dispatch: false}
   );
@@ -57,10 +73,17 @@ export class WishlistEffects {
     this.actions$.pipe(
       ofType(WishlistActions.DELETE_WINE_FROM_FAVOURITES),
       switchMap((wineToDeleteReq: WishlistActions.DeleteWineFromFavourites) => {
+        this.spinnerService.setLoading(true);
         return this.http.post<void>(
           'http://localhost:8080/api/wine/delete-favourite-wine',
           wineToDeleteReq.payload
         );
+      }),
+      tap(() => this.spinnerService.setLoading(false)),
+      catchError(() => {
+        const errorMessage = 'An error occurred while deleting wine from favourites.';
+        this.spinnerService.setLoading(false);
+        return throwError(errorMessage);
       }),
     ), {dispatch: false}
   );

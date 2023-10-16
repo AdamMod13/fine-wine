@@ -17,7 +17,7 @@ import {
   RecommendationFormModalComponent
 } from './recommendation/recommendation-form-modal/recommendation-form-modal.component';
 import {RecommendationEffects} from "./recommendation/store/recommendation.effects";
-import {SpinnerComponent} from './spinner/spinner.component';
+import {SpinnerComponent} from './Shared/spinner/spinner.component';
 import {AuthEffects} from "./auth/store/auth.effects";
 import {CoreModule} from "./core.module";
 import {ErrorModalComponent} from './Shared/error-modal/error-modal.component';
@@ -32,7 +32,7 @@ import {WishlistEffects} from "./wishlist/store/wishlist.effects";
     RecommendationFormModalComponent,
     SpinnerComponent,
     ErrorModalComponent,
-    AuthComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,

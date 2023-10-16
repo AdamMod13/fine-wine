@@ -19,7 +19,7 @@ export function wishlistReducer(
       if (action.payload) {
         return {
           ...state,
-          favouriteWine: action.payload
+          favouriteWine: [...state.favouriteWine, ...action.payload]
         }
       } else {
         return {
@@ -41,6 +41,11 @@ export function wishlistReducer(
       return {
         ...state,
         favouriteWine: [...state.favouriteWine.filter(wine => wine.id !== action.payload.wine.id)]
+      }
+    case WishlistActions.CLEAR_FAVOURITES:
+      return {
+        ...state,
+        favouriteWine: []
       }
     default:
       return state;

@@ -5,10 +5,10 @@ import {FindWineRoutingModule} from "./find-wine-routing.module";
 import {FindWineComponent} from "./find-wine.component";
 import {NgHeroiconsModule} from "@dimaslz/ng-heroicons";
 import {CommonModule} from "@angular/common";
-import {CountryCodePipe} from "../Shared/country-code.pipe";
+import {CoreModule} from "../core.module";
 
 @NgModule({
-  declarations: [FindWineComponent, CountryCodePipe],
+  declarations: [FindWineComponent],
   imports: [
     RouterModule,
     ReactiveFormsModule,
@@ -16,6 +16,7 @@ import {CountryCodePipe} from "../Shared/country-code.pipe";
     NgHeroiconsModule,
     FormsModule,
     CommonModule,
+    CoreModule,
   ],
   exports: [],
   providers: [],

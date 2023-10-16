@@ -1,11 +1,11 @@
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {switchMap, tap} from 'rxjs';
+import {switchMap, tap, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import * as MainPageActions from './main-page.action';
 import {Wine} from "../../Models/wine.model";
-import {SpinnerService} from "../../spinner/spinner.service";
+import {SpinnerService} from "../../Shared/spinner/spinner.service";
 
 @Injectable()
 export class MainPageEffects {
@@ -22,7 +22,12 @@ export class MainPageEffects {
       }),
       tap(() => setTimeout(() => {
         this.spinnerService.setLoading(false)
-      }, 1500))
+      }, 1500)),
+      catchError(() => {
+        const errorMessage = 'An error occurred while fetching wines.';
+        this.spinnerService.setLoading(false);
+        return throwError(errorMessage);
+      }),
     )
   );
 

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Wine} from "../../Models/wine.model";
 import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
@@ -12,7 +12,7 @@ import * as WishlistActions from "../../wishlist/store/wishlist.action";
   templateUrl: './recommended-wine-page.component.html',
   styleUrls: ['./recommended-wine-page.component.css']
 })
-export class RecommendedWinePageComponent implements OnInit {
+export class RecommendedWinePageComponent implements OnInit, OnDestroy {
   public recommendedWines: Wine[] = [];
   private subscription: Subscription;
   private authSubscription: Subscription;
@@ -40,5 +40,11 @@ export class RecommendedWinePageComponent implements OnInit {
 
   addToFavourites(wine: Wine) {
     this.store.dispatch(new WishlistActions.AddWineToFavourites({userId: this.user.id, wine: wine}));
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(new WishlistActions.ClearFavourites());
+    this.authSubscription.unsubscribe();
+    this.subscription.unsubscribe()
   }
 }
