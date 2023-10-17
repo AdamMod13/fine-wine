@@ -17,12 +17,13 @@ import {
   RecommendationFormModalComponent
 } from './recommendation/recommendation-form-modal/recommendation-form-modal.component';
 import {RecommendationEffects} from "./recommendation/store/recommendation.effects";
-import {SpinnerComponent} from './spinner/spinner.component';
+import {SpinnerComponent} from './Shared/spinner/spinner.component';
 import {AuthEffects} from "./auth/store/auth.effects";
 import {CoreModule} from "./core.module";
 import {ErrorModalComponent} from './Shared/error-modal/error-modal.component';
 import {AuthComponent} from './auth/auth.component'
 import {FindWineEffects} from "./find-wine/store/find-wine.effects";
+import {WishlistEffects} from "./wishlist/store/wishlist.effects";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import {FindWineEffects} from "./find-wine/store/find-wine.effects";
     RecommendationFormModalComponent,
     SpinnerComponent,
     ErrorModalComponent,
-    AuthComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +43,7 @@ import {FindWineEffects} from "./find-wine/store/find-wine.effects";
     NgOptimizedImage,
     StoreRouterConnectingModule.forRoot(),
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([MainPageEffects, RecommendationEffects, AuthEffects, FindWineEffects]),
+    EffectsModule.forRoot([MainPageEffects, RecommendationEffects, AuthEffects, FindWineEffects, WishlistEffects]),
     ReactiveFormsModule,
     CoreModule,
   ],

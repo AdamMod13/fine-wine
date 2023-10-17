@@ -1,25 +1,25 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {FindWineRoutingModule} from "./find-wine-routing.module";
-import {FindWineComponent} from "./find-wine.component";
 import {NgHeroiconsModule} from "@dimaslz/ng-heroicons";
 import {CommonModule} from "@angular/common";
+import {WishlistComponent} from "./wishlist.component";
+import {WishlistRoutingModule} from "./wishlist-routing.module";
 import {CoreModule} from "../core.module";
 
 @NgModule({
-  declarations: [FindWineComponent],
+  declarations: [WishlistComponent],
   imports: [
     RouterModule,
     ReactiveFormsModule,
-    FindWineRoutingModule,
     NgHeroiconsModule,
+    WishlistRoutingModule,
     FormsModule,
     CommonModule,
-    CoreModule,
+    CoreModule
   ],
   exports: [],
   providers: [],
 })
-export class FindWineModule {
+export class WishlistModule {
 }

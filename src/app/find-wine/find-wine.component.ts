@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as fromApp from "../store/app.reducer";
-import * as FindWineActions from './store/find-wine.action'
+import * as FindWineActions from './store/find-wine.action';
 import {map} from "rxjs/operators";
-import {SpinnerService} from "../spinner/spinner.service";
+import {SpinnerService} from "../Shared/spinner/spinner.service";
 import {Subscription} from "rxjs";
 import {Wine} from "../Models/wine.model";
 import {MainCoutriesEnum, OtherCountriesEnum} from "../enums/coutries-enum";
@@ -11,19 +11,20 @@ import {WineColorEnum} from "../enums/wine-color-enum";
 import {FormControl, FormGroup} from "@angular/forms";
 import {FindWineReq} from "../Models/findWineReq.model";
 import {WinePage} from "../Models/winePage.model";
-import {BasicProvincesEnum} from "../enums/basic-provinces-enum";
+import * as WishlistActions from "../wishlist/store/wishlist.action";
+import {User} from "../auth/user.model";
+import {WishlistService} from "../wishlist/wishlist.service";
 
 @Component({
   selector: 'app-find-wine',
   templateUrl: './find-wine.component.html',
   styleUrls: ['./find-wine.component.css']
 })
-export class FindWineComponent implements OnInit {
+export class FindWineComponent implements OnInit, OnDestroy {
 
   public wineColorEnum = [WineColorEnum.RED, WineColorEnum.WHITE, WineColorEnum.ROSE, WineColorEnum.SPARKLING];
   public mainCoutriesEnum = MainCoutriesEnum;
   public otherCountriesEnum = OtherCountriesEnum;
-  public basicProvincesEnum = BasicProvincesEnum;
   public basicVarieties: string[] = [];
   public basicWineries: string[] = [];
 
@@ -31,28 +32,35 @@ export class FindWineComponent implements OnInit {
   public pickedCountries: string[] = [];
   public pickedProvinces: string[] = [];
   public pickedVarieties: string[] = [];
+  public pickedWineries: string[] = [];
 
   public pageNumber: number = 0;
   public wines: Wine[] = [];
   public winePageRes: WinePage | null = null;
-  private subscription: Subscription;
   public isMorePicked: boolean = false;
+
+  public user: User;
+
+  private subscription: Subscription;
+  private authSubscription: Subscription;
 
   public filterForm = new FormGroup({
     wineColors: new FormControl<string[]>([]),
     countries: new FormControl<string[]>([]),
     varieties: new FormControl<string[]>([]),
-    provinces: new FormControl<string[]>([]),
+    wineries: new FormControl<string[]>([]),
     price: new FormControl(),
     points: new FormControl(),
     sortOrder: new FormControl(''),
   })
 
-  constructor(private store: Store<fromApp.AppState>, private spinnerService: SpinnerService) {
+  constructor(
+    private store: Store<fromApp.AppState>,
+    private spinnerService: SpinnerService,
+    public wishlistService: WishlistService) {
   }
 
   ngOnInit() {
-    console.log(this.pageNumber)
     this.spinnerService.setLoading(true);
     this.store.dispatch(new FindWineActions.FetchWinePage({
       pageNumber: this.pageNumber,
@@ -63,9 +71,17 @@ export class FindWineComponent implements OnInit {
       .pipe(map((findWinePageState) => findWinePageState))
       .subscribe((findWineState) => {
         this.winePageRes = findWineState.winePage;
-        this.wines.push(...findWineState.wines);
-        this.basicVarieties.push(...findWineState.varieties);
-        this.basicWineries.push(...findWineState.wineries);
+        this.wines = findWineState.wines;
+        this.basicVarieties = findWineState.varieties;
+        this.basicWineries = findWineState.wineries;
+      })
+    this.authSubscription = this.store
+      .select('auth')
+      .pipe(map((auth) => auth))
+      .subscribe((auth) => {
+        if (auth.user) {
+          this.user = auth.user;
+        }
       })
   }
 
@@ -96,14 +112,14 @@ export class FindWineComponent implements OnInit {
     this.pickedColors = [...this.pickedColors, wineColor];
   }
 
-  selectProvince(province: string): void {
-    if (this.pickedProvinces.includes(province)) {
-      this.pickedProvinces.splice(this.pickedProvinces.indexOf(province), 1);
-      this.filterForm.controls.provinces.setValue([...this.pickedProvinces]);
+  selectWinery(province: string): void {
+    if (this.pickedWineries.includes(province)) {
+      this.pickedWineries.splice(this.pickedWineries.indexOf(province), 1);
+      this.filterForm.controls.wineries.setValue([...this.pickedWineries]);
       return;
     }
-    this.filterForm.controls.wineColors.setValue([...this.pickedProvinces, province]);
-    this.pickedProvinces = [...this.pickedProvinces, province];
+    this.filterForm.controls.wineries.setValue([...this.pickedWineries, province]);
+    this.pickedWineries = [...this.pickedWineries, province];
   }
 
   selectVariety(variety: string): void {
@@ -118,9 +134,10 @@ export class FindWineComponent implements OnInit {
 
   applyFilters() {
     this.pageNumber = 0;
-    this.spinnerService.setLoading(true);
-    console.log(this)
-    console.log(this.filterForm.value)
+    this.filterForm.controls.countries.setValue(this.pickedCountries.map(
+      country => country.charAt(0).toUpperCase() + country.slice(1)
+    ));
+    this.store.dispatch(new FindWineActions.ClearWines());
     this.store.dispatch(new FindWineActions.FetchWinePage({
       pageNumber: this.pageNumber,
       findWineReq: this.filterForm.value as FindWineReq
@@ -135,13 +152,21 @@ export class FindWineComponent implements OnInit {
     this.filterForm.reset();
   }
 
-  loadMore(pageNumber: number) {
-    pageNumber += 1;
-    this.spinnerService.setLoading(true);
+  loadMore() {
+    this.pageNumber += 1;
     this.store.dispatch(new FindWineActions.FetchWinePage({
-      pageNumber: pageNumber,
+      pageNumber: this.pageNumber,
       findWineReq: this.filterForm.value as FindWineReq
     }));
   }
 
+  addToFavourites(wine: Wine) {
+    this.store.dispatch(new WishlistActions.AddWineToFavourites({userId: this.user.id, wine: wine}));
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(new WishlistActions.ClearFavourites());
+    this.authSubscription.unsubscribe();
+    this.subscription.unsubscribe()
+  }
 }

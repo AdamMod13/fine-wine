@@ -39,4 +39,5 @@ export enum AllCountriesEnum {
   MOLDOVA = 'md',
   URUGUAY = 'uy',
   BRAZIL = 'br',
+  AUSTRALIA = 'au'
 }

@@ -15,12 +15,13 @@ module.exports = {
       winery5: "url('./assets/Images/winery_5.jpg')",
       pouringWine: "url('./assets/Images/pouring_wine.png')",
       wineBottles: "url('./assets/Images/wine_bottles.jpg')",
-      wineRack: "url('./assets/Images/wine_rack.jpg')"
+      wineRack: "url('./assets/Images/wine_rack.jpg')",
     },
     extend: {
       colors: {
         'main': '#5C001E',
         'main-light': '#B76E79',
+        'main-medium': '#ad7f8e',
         'main-dark': '#2e000f',
         'light-bg': '#eae8e8',
         'dark-bg': '#1b1b1b',
