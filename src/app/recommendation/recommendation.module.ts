@@ -1,17 +1,17 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RecommendedWinePageComponent} from "./recommended-wine-page/recommended-wine-page.component";
-import {RecommendedWinePageRoutingModule} from "./recommendation.routing";
 import {NgHeroiconsModule} from "@dimaslz/ng-heroicons";
+import {RecommendedWineRoutingModule} from "./recommendation.routing";
 
 
 @NgModule({
   declarations: [
-    RecommendedWinePageComponent
+    RecommendedWinePageComponent,
   ],
   imports: [
     CommonModule,
-    RecommendedWinePageRoutingModule,
+    RecommendedWineRoutingModule,
     NgHeroiconsModule
   ]
 })

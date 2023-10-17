@@ -16,7 +16,7 @@ import {CoreModule} from "../core.module";
     WishlistRoutingModule,
     FormsModule,
     CommonModule,
-    CoreModule
+    CoreModule,
   ],
   exports: [],
   providers: [],

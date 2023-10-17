@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: RecommendedWinePageComponent,
-    resolve: {currentRecommendedWine: getCurrentRecommendationResolver}
+    resolve: {currentRecommendedWine: getCurrentRecommendationResolver},
   },
 ];
 
@@ -15,5 +15,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class RecommendedWinePageRoutingModule {
+export class RecommendedWineRoutingModule {
 }

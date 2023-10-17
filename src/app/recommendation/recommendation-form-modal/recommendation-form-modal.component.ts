@@ -6,7 +6,6 @@ import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import * as RecommendationFormActions from "../store/recommendation.action";
 import {WineRecommendationReq} from "../../Models/WineRecommendationReq.model";
-import {SpinnerService} from "../../Shared/spinner/spinner.service";
 import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
 
@@ -47,7 +46,7 @@ export class RecommendationFormModalComponent implements OnDestroy {
     points: new FormControl<number>(85)
   });
 
-  constructor(private store: Store<fromApp.AppState>, private spinnerService: SpinnerService) {
+  constructor(private store: Store<fromApp.AppState>) {
   }
 
   initRecommendationForm(): void {
@@ -58,7 +57,6 @@ export class RecommendationFormModalComponent implements OnDestroy {
       .select('recommendation')
       .pipe(map((recommendationModal) => recommendationModal))
       .subscribe((recommendationModalState) => {
-        console.log(recommendationModalState)
         if (
           this.isFirstData
           && recommendationModalState.wineriesFilter.length !== 0
@@ -76,7 +74,6 @@ export class RecommendationFormModalComponent implements OnDestroy {
           this.filteredWinery = [...this.basicWineryFilter];
           return;
         }
-        console.log("AFTER")
         this.filteredVariety = recommendationModalState?.varietiesFilter;
         this.filteredWinery = recommendationModalState?.wineriesFilter;
       })
@@ -164,7 +161,6 @@ export class RecommendationFormModalComponent implements OnDestroy {
     setTimeout(() => {
       this.showRecommendationModal = false;
     }, 1000)
-    console.log(recommendationReq)
     this.store.dispatch(new RecommendationFormActions.FetchRecommendations(recommendationReq));
     this.resetRecommendationForm();
   }

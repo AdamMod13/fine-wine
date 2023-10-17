@@ -21,15 +21,13 @@ export class WishlistService {
         this.store.dispatch(new WishlistActions.FetchAllFavourites(this.user.id))
       }
     });
-    this.store.select(state => state.wishlistPage.favouriteWine).subscribe(wines => {
+    this.store.select(state => state.wishlistPage.allFavourites).subscribe(wines => {
       this.favoriteWines = [...wines];
     });
   }
 
   addToFavourites(wine: Wine) {
-    console.log(this)
     if (this.user) {
-      console.log(wine)
       const saveWineReq: WishlistReq = {
         userId: this.user.id,
         wine: wine

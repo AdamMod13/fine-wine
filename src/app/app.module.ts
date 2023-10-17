@@ -32,7 +32,7 @@ import {WishlistEffects} from "./wishlist/store/wishlist.effects";
     RecommendationFormModalComponent,
     SpinnerComponent,
     ErrorModalComponent,
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +45,7 @@ import {WishlistEffects} from "./wishlist/store/wishlist.effects";
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([MainPageEffects, RecommendationEffects, AuthEffects, FindWineEffects, WishlistEffects]),
     ReactiveFormsModule,
-    CoreModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

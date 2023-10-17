@@ -15,6 +15,7 @@ export class RecommendationEffects {
     this.actions$.pipe(
       ofType(RecommendationFormActions.FETCH_RECOMMENDATIONS),
       switchMap((recommendationReq: RecommendationFormActions.FetchRecommendations) => {
+        this.spinnerService.setLoading(true);
         return this.http.post<Wine[]>(
           'http://localhost:8080/api/wine/get-recommendations',
           recommendationReq.payload
@@ -24,7 +25,6 @@ export class RecommendationEffects {
         return new RecommendationFormActions.SaveCurrentRecommendations(wines);
       }),
       tap(() => {
-        this.spinnerService.setLoading(false);
         this.router.navigate(['/recommendations'])
       }),
       catchError(() => {
@@ -44,21 +44,19 @@ export class RecommendationEffects {
           currentRecommendations.payload
         );
       }),
-      map(() => {
-        return new RecommendationFormActions.GetCurrentRecommendations();
-      }),
       catchError(() => {
         const errorMessage = 'An error occurred while saving recommendation.';
         this.spinnerService.setLoading(false);
         return throwError(errorMessage);
       })
-    ),
+    ), {dispatch: false}
   );
 
   getCurrentRecommendations = createEffect(() => {
       return this.actions$.pipe(
         ofType(RecommendationFormActions.GET_CURRENT_RECOMMENDATIONS),
         switchMap(() => {
+          this.spinnerService.setLoading(true);
           return this.http.get<Wine[]>(
             'http://localhost:8080/api/wine/get-current-recommendations'
           );

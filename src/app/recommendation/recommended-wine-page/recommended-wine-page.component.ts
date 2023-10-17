@@ -6,6 +6,9 @@ import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
 import {User} from "../../auth/user.model";
 import * as WishlistActions from "../../wishlist/store/wishlist.action";
+import * as RecommendationPageActions from "../store/recommendation.action";
+import {SpinnerService} from "../../Shared/spinner/spinner.service";
+import {WishlistService} from "../../wishlist/wishlist.service";
 
 @Component({
   selector: 'app-recommended-wine-page',
@@ -18,14 +21,19 @@ export class RecommendedWinePageComponent implements OnInit, OnDestroy {
   private authSubscription: Subscription;
   public user: User;
 
-  constructor(private store: Store<fromApp.AppState>) {
+  constructor(private store: Store<fromApp.AppState>, private spinnerService: SpinnerService, public wishlistService: WishlistService) {
   }
 
   ngOnInit() {
+    this.spinnerService.setLoading(true);
+    this.store.dispatch(new RecommendationPageActions.GetCurrentRecommendations());
     this.subscription = this.store
       .select('recommendation')
       .pipe(map((recommendationPageState) => recommendationPageState.recommendedWines))
       .subscribe((wines: Wine[]) => {
+        if (wines) {
+          this.spinnerService.setLoading(false);
+        }
         this.recommendedWines = wines;
       })
     this.authSubscription = this.store
@@ -36,10 +44,6 @@ export class RecommendedWinePageComponent implements OnInit, OnDestroy {
           this.user = auth.user;
         }
       })
-  }
-
-  addToFavourites(wine: Wine) {
-    this.store.dispatch(new WishlistActions.AddWineToFavourites({userId: this.user.id, wine: wine}));
   }
 
   ngOnDestroy() {
