@@ -8,6 +8,7 @@ import {SpinnerService} from "../../Shared/spinner/spinner.service";
 import {Router} from "@angular/router";
 import {catchError, map} from "rxjs/operators";
 import {RecommendationModalFiltersRes} from "../../Models/recommendationModalFiltersRes.model";
+import {SavedRecommendationsRes} from "../../Models/savedRecommendationsRes.model";
 
 @Injectable()
 export class RecommendationEffects {
@@ -39,9 +40,30 @@ export class RecommendationEffects {
     this.actions$.pipe(
       ofType(RecommendationFormActions.SAVE_CURRENT_RECOMMENDATIONS),
       switchMap((currentRecommendations: RecommendationFormActions.SaveCurrentRecommendations) => {
-        return this.http.post<Wine[]>(
+        return this.http.post(
           'http://localhost:8080/api/wine/save-current-recommendations',
           currentRecommendations.payload
+        );
+      }),
+      map(() => {
+        return new RecommendationFormActions.GetCurrentRecommendations();
+      }),
+      tap(() => this.spinnerService.setLoading(false)),
+      catchError(() => {
+        const errorMessage = 'An error occurred while saving recommendation.';
+        this.spinnerService.setLoading(false);
+        return throwError(errorMessage);
+      })
+    )
+  );
+
+  saveRecommendation = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RecommendationFormActions.SAVE_RECOMMENDATION),
+      switchMap((req: RecommendationFormActions.SaveRecommendation) => {
+        return this.http.post(
+          'http://localhost:8080/api/recommendations/save-recommendation',
+          req.payload
         );
       }),
       catchError(() => {
@@ -73,13 +95,35 @@ export class RecommendationEffects {
     }
   );
 
+  getSavedRecommendations = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(RecommendationFormActions.GET_SAVED_RECOMMENDATIONS),
+        switchMap((getSavedRecommendations: RecommendationFormActions.GetSavedRecommendations) => {
+          this.spinnerService.setLoading(true);
+          return this.http.get<SavedRecommendationsRes[]>(
+            `http://localhost:8080/api/recommendations/get-all-user-recommendations/${getSavedRecommendations.payload}`
+          );
+        }),
+        map((res) => {
+          return new RecommendationFormActions.SetSavedRecommendations(res);
+        }),
+        tap(() => this.spinnerService.setLoading(false)),
+        catchError(() => {
+          const errorMessage = 'An error occurred fetching current recommendation.';
+          this.spinnerService.setLoading(false);
+          return throwError(errorMessage);
+        })
+      );
+    }
+  );
+
   getRecommendationModalFilters = createEffect(() => {
       return this.actions$.pipe(
         ofType(RecommendationFormActions.GET_RECOMMENDATION_MODAL_FILTERS),
         switchMap(() => {
           this.spinnerService.setLoading(true);
           return this.http.get<RecommendationModalFiltersRes>(
-            'http://localhost:8080/api/recommendation/get-filters'
+            'http://localhost:8080/api/recommendation-modal/get-filters'
           );
         }),
         map((recommendationFilters) => {
@@ -103,7 +147,7 @@ export class RecommendationEffects {
         ofType(RecommendationFormActions.SEARCH_WINERY_OR_VARIETY),
         switchMap((searchWineryOrVarietyRes: RecommendationFormActions.SearchWineryOrVariety) => {
           return this.http.post<RecommendationModalFiltersRes>(
-            'http://localhost:8080/api/recommendation/search-winery-or-variety',
+            'http://localhost:8080/api/recommendation-modal/search-winery-or-variety',
             searchWineryOrVarietyRes.payload
           );
         }),

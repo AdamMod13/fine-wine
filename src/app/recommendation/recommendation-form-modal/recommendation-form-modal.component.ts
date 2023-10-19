@@ -5,7 +5,7 @@ import {FormControl, FormGroup, NgForm} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import * as RecommendationFormActions from "../store/recommendation.action";
-import {WineRecommendationReq} from "../../Models/WineRecommendationReq.model";
+import {WineRecommendationReq} from "../../Models/wineRecommendationReq.model";
 import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
 
@@ -131,7 +131,7 @@ export class RecommendationFormModalComponent implements OnDestroy {
   selectWineColor(wineColor: string): void {
     if (this.pickedColors.includes(wineColor)) {
       this.pickedColors.splice(this.pickedColors.indexOf(wineColor), 1);
-      this.recommendationForm.controls.countries.setValue([...this.pickedColors]);
+      this.recommendationForm.controls.wineColors.setValue([...this.pickedColors]);
       return;
     }
     this.recommendationForm.controls['wineColors'].setValue([...this.pickedColors, wineColor]);

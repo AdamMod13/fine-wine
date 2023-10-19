@@ -1,6 +1,6 @@
 <div
-  class="fixed top-0 z-20 m-0 p-0 overflow-hidden w-full bg-dark-bg bg-opacity-80 flex font-playfair justify-center font-semibold text-xl shadow-2xl"
-  [ngClass]="{'bg-opacity-80': isMainPage, 'sticky': !isMainPage}"
+  class="fixed top-0 z-20 m-0 p-0 overflow-hidden w-full bg-opacity-80 flex font-playfair justify-center font-semibold text-xl shadow-2xl"
+  [ngClass]="{'bg-opacity-80 bg-dark-bg': isMainPage, 'sticky bg-main-dark': !isMainPage}"
 >
   <nav
     class="flex flex-row flex-nowrap flex-1 max-w-screen-2xl h-auto text-light
@@ -12,23 +12,29 @@
       <button class="relative group px-1" (click)="openRecommendationFormModal()">
         <span>RECOMMEND</span>
         <span
+          [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
           class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
         <span
+          [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
           class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
       </button>
       <a class="relative group px-1" routerLink="/find-wine">
         <span>FIND</span>
         <span
-          class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+          [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+          class="absolute -bottom-2 left-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
         <span
-          class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+          [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+          class="absolute -bottom-2 right-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
       </a>
       <a class="relative group px-1" href="#">
         <span>LEARN MORE</span>
         <span
-          class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+          [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+          class="absolute -bottom-2 left-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
         <span
-          class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+          [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+          class="absolute -bottom-2 right-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
       </a>
     </ul>
     <div class="flex w-3/12 justify-end">
@@ -36,9 +42,11 @@
         <button class="relative group px-1" (click)="openLoginModal()">
           <span>LOGIN</span>
           <span
-            class="absolute bottom-1 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+            [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+            class="absolute bottom-1 left-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
           <span
-            class="absolute bottom-1 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+            [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+            class="absolute bottom-1 right-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
         </button>
         <button class="bg-main py-2 px-4" (click)="openSignUpModal()">
           SIGN UP
@@ -52,9 +60,11 @@
               WISHLIST
             </span>
             <span
-              class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+              [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+              class="absolute -bottom-2 left-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
             <span
-              class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+              [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+              class="absolute -bottom-2 right-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
           </a>
           <div
             class="relative"
@@ -76,9 +86,11 @@
                 ACCOUNT
               </span>
               <span
-                class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+                [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+                class="absolute -bottom-2 left-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
               <span
-                class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+                [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+                class="absolute -bottom-2 right-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
               <span class="ml-2 w-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

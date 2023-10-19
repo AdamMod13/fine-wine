@@ -5,7 +5,7 @@
     <div
       class="mx-12 py-12 flex flex-row flex-wrap justify-between text-black max-w-screen-2xl font-cormorant">
       <ng-container *ngFor="let recommendedWine of recommendedWines">
-        <div class="w-1/2 z-10">
+        <div class="w-1/2 z-10 text-dark">
           <div class="m-5 pl-4 pr-12 py-8 rounded-lg bg-white border-solid border-[1px] border-gray-300 h-[20rem]
             hover:shadow-xl transition duration-500 ease-in-out group relative">
             <ng-container *ngIf="wishlistService.checkIfLiked(recommendedWine.id);else notLikedWine">
@@ -80,9 +80,45 @@
               </div>
             </div>
           </div>
-
         </div>
       </ng-container>
+      <div class="flex flex-row justify-between items-center w-full text-light-bg z-10 mt-8 px-24">
+        <a
+          routerLink="/main-page"
+          class="flex justify-center items-center px-6 py-3 text-lg font-semibold font-playfair border-2 border-dark-bg
+          border-solid bg-main active:scale-95 hover:shadow-lg transition duration-300 ease-in-out"
+        >
+          <div class="flex justify-center items-center gap-2">
+            Delete Recommendation
+            <trash-solid-icon></trash-solid-icon>
+          </div>
+        </a>
+        <ng-container
+          *ngIf="!isCurrentRecommendationSaved;else recommendationSaved"
+        >
+          <button
+            (click)="saveRecommendation()"
+            class="flex justify-center items-center px-6 py-3 text-lg font-semibold font-playfair border-2 border-dark-bg
+          border-solid bg-main active:scale-95 hover:shadow-lg transition duration-300 ease-in-out"
+          >
+            <div class="flex justify-center items-center gap-2">
+              Save Recommendation
+              <hand-thumb-up-solid-icon></hand-thumb-up-solid-icon>
+            </div>
+          </button>
+        </ng-container>
+        <ng-template #recommendationSaved>
+          <div
+            class="flex justify-center items-center px-6 py-3 text-lg font-semibold font-playfair border-2 border-dark-bg
+            border-solid bg-main active:scale-95 hover:shadow-lg transition duration-300 ease-in-out"
+          >
+            <div class="flex justify-center items-center gap-2">
+              Saved
+              <check-circle-solid-icon></check-circle-solid-icon>
+            </div>
+          </div>
+        </ng-template>
+      </div>
     </div>
   </div>
 </div>

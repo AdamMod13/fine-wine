@@ -1,18 +1,23 @@
 import * as RecommendationFormActions from './recommendation.action';
 import {Wine} from "../../Models/wine.model";
+import {SavedRecommendationsRes} from "../../Models/savedRecommendationsRes.model";
 
 export interface RecommendationFormState {
   varietiesFilter: string[];
   wineriesFilter: string[];
   filterType: string;
   recommendedWines: Wine[];
+  isCurrentRecommendationSaved: boolean;
+  savedRecommendations: SavedRecommendationsRes[];
 }
 
 const initialState: RecommendationFormState = {
   varietiesFilter: [],
   wineriesFilter: [],
   filterType: '',
-  recommendedWines: []
+  recommendedWines: [],
+  isCurrentRecommendationSaved: false,
+  savedRecommendations: [],
 };
 
 export function recommendationReducer(
@@ -24,17 +29,29 @@ export function recommendationReducer(
       return {
         ...state,
         recommendedWines: [...action.payload],
+        isCurrentRecommendationSaved: false
       };
     case RecommendationFormActions.CLEAR_RECOMMENDATIONS:
       return {
         ...state,
-        recommendedWines: []
+        recommendedWines: [],
+        isCurrentRecommendationSaved: false
       }
     case RecommendationFormActions.SET_RECOMMENDATION_MODAL_FILTERS:
       return {
         ...state,
         varietiesFilter: [...action.payload.varieties],
         wineriesFilter: [...action.payload.wineries]
+      }
+    case RecommendationFormActions.SAVE_RECOMMENDATION:
+      return {
+        ...state,
+        isCurrentRecommendationSaved: true
+      }
+    case RecommendationFormActions.SET_SAVED_RECOMMENDATIONS:
+      return {
+        ...state,
+        savedRecommendations: action.payload
       }
     case RecommendationFormActions.SET_WINERY_OR_VARIETY:
       switch (action.payload.type) {

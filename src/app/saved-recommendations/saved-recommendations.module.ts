@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {NgHeroiconsModule} from "@dimaslz/ng-heroicons";
 import {SavedRecommendationsComponent} from "./saved-recommendations.component";
 import {SavedRecommendationsRouting} from "./saved-recommendations.routing";
+import {CoreModule} from "../core.module";
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import {SavedRecommendationsRouting} from "./saved-recommendations.routing";
   imports: [
     CommonModule,
     SavedRecommendationsRouting,
-    NgHeroiconsModule
+    NgHeroiconsModule,
+    CoreModule
   ]
 })
 export class SavedRecommendationsModule {
