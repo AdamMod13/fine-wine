@@ -5,7 +5,7 @@ import {FindWineComponent} from "./find-wine.component";
 const routes: Routes = [
   {
     path: '',
-    component: FindWineComponent,
+    component: FindWineComponent
   }
 ];
 

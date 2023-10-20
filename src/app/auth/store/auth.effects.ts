@@ -9,6 +9,9 @@ import {environment} from '../../../environments/environment';
 import * as AuthActions from './auth.actions';
 import {User} from '../user.model';
 import {AuthService} from '../auth.service';
+import {Store} from "@ngrx/store";
+import * as fromApp from "../../store/app.reducer";
+import * as WishlistAction from "../../wishlist/store/wishlist.action";
 
 export interface AuthResponseData {
   kind: string;
@@ -186,6 +189,7 @@ export class AuthEffects {
       tap(() => {
         this.authService.clearLogoutTimer();
         localStorage.removeItem('userData');
+        this.store.dispatch(new WishlistAction.ClearFavourites())
         this.router.navigate(['/main-page']);
       })
     ), {dispatch: false}
@@ -195,7 +199,8 @@ export class AuthEffects {
     private actions$: Actions,
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<fromApp.AppState>
   ) {
   }
 }

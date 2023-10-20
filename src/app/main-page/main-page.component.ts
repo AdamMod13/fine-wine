@@ -19,7 +19,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
   public bestRandomWines: Wine[] = [];
   private mainPageSubscription: Subscription;
   private authSubscription: Subscription;
-  private favouritesSubscription: Subscription;
   public user: User;
 
   constructor(
@@ -52,6 +51,5 @@ export class MainPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(new WishlistActions.ClearFavourites());
     this.authSubscription.unsubscribe();
     this.mainPageSubscription.unsubscribe();
-    this.favouritesSubscription.unsubscribe();
   }
 }

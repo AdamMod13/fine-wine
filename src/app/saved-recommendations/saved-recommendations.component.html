@@ -1,0 +1,71 @@
+<div class="absolute top-0 left-0 w-full bg-light-bg min-h-screen z-0">
+</div>
+<div class="w-full bg-light-bg">
+  <div class="max-w-screen-2xl m-auto my-12">
+    <div class="flex flex-col mx-12 justify-center gap-y-4 px-12 py-8">
+      <h1 class="z-10 text-3xl font-playfair font-semibold">SAVED RECOMMENDATIONS</h1>
+      <div *ngFor="let recommendation of savedRecommendations"
+           class="flex flex-row flex-nowrap gap-x-8 px-4 py-8 relative overflow-x-scroll h-[28rem] w-full">
+        <div *ngFor="let wine of recommendation.wines; let i = index"
+             class="flex flex-col w-1/3 rounded-lg shadow-lg shrink-0 h-full relative">
+          <ng-container *ngIf="wishlistService.checkIfLiked(wine.id);else notLikedWine">
+            <button class="absolute text-black top-3 right-3 z-20 p-2 bg-light-bg rounded-full"
+                    (click)="wishlistService.deleteFromFavourites(wine)">
+              <heart-solid-icon></heart-solid-icon>
+            </button>
+          </ng-container>
+          <ng-template #notLikedWine>
+            <button class="absolute text-black top-3 right-3 z-20 p-2 bg-light-bg rounded-full"
+                    (click)="wishlistService.addToFavourites(wine)">
+              <heart-outline-icon></heart-outline-icon>
+            </button>
+          </ng-template>
+          <div class="flex flex-col h-full relative overflow-hidden group">
+            <div class="w-full h-1/2">
+              <img alt="wine_picture" [src]="'./assets/Images/winery_' + ((i%2)+1) + '.jpg'"
+                   class=""/>
+            </div>
+            <div
+              class="w-full h-3/5 flex flex-col bg-light-bg py-6 px-12 z-10 absolute bottom-0 transition-all ease-in-out duration-500
+              group-hover:h-full"
+            >
+              <div class="w-full flex flex-col items-start">
+                <h1 class="font-playfair font-bold text-2xl text-dark">{{ wine.winery }}</h1>
+                <div class="flex justify-center items-center gap-x-2 mt-2">
+                  <span class="fi fis rounded-full scale-[1.35]"
+                        [ngClass]="'fi-' + (wine.country.toUpperCase() | coutryCode)"></span>
+                  <span class="font-cormorant text-xl font-semibold">{{ wine.variety }}, {{ wine.country }}</span>
+                </div>
+              </div>
+              <div class="flex flex-col items-start">
+                <div class="flex flex-row items-center gap-x-12 w-full mt-8 font-cormorant font-semibold text-xl">
+                <span class="flex flex-row gap-x-1">
+                  <map-pin-solid-icon></map-pin-solid-icon>
+                  <p>
+                    {{ wine.province }}
+                  </p>
+                </span>
+                  <span *ngIf="wine.price != '0.0'"
+                        class="flex flex-row gap-x-1"
+                  >
+                  <banknotes-solid-icon></banknotes-solid-icon>
+                  <p>{{ wine.price }}$</p>
+                </span>
+                  <span class="flex flex-row gap-x-1">
+                  <star-solid-icon></star-solid-icon>
+                  <p>{{ wine.points}}</p>
+                </span>
+                </div>
+                <div
+                  class="mt-2 overflow-hidden font-cormorant text-lg font-semibold">
+                  <p>{{ wine.description }}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

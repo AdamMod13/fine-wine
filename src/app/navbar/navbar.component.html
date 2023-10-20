@@ -1,34 +1,40 @@
 <div
-  class="fixed top-0 z-20 m-0 p-0 overflow-hidden w-full bg-dark-bg bg-opacity-80 flex font-playfair justify-center font-semibold text-xl shadow-2xl"
-  [ngClass]="{'bg-opacity-80': isMainPage, 'sticky': !isMainPage}"
+  class="fixed top-0 z-20 m-0 p-0 overflow-hidden w-full bg-opacity-80 flex font-playfair justify-center font-semibold text-xl shadow-2xl"
+  [ngClass]="{'bg-opacity-80 bg-dark-bg': isMainPage, 'sticky bg-main-dark': !isMainPage}"
 >
   <nav
     class="flex flex-row flex-nowrap flex-1 max-w-screen-2xl h-auto text-light
     px-12 py-4 items-center justify-between">
-    <h1 class="w-3/12 justify-start text-3xl cursor-pointer" routerLink="/">
+    <h1 class="w-3/12 justify-start text-3xl cursor-pointer" routerLink="/main-page">
       FineWine
     </h1>
     <ul class="flex flex-row flex-nowrap text-center justify-center space-x-12 w-6/12">
       <button class="relative group px-1" (click)="openRecommendationFormModal()">
         <span>RECOMMEND</span>
         <span
+          [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
           class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
         <span
+          [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
           class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
       </button>
       <a class="relative group px-1" routerLink="/find-wine">
         <span>FIND</span>
         <span
-          class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+          [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+          class="absolute -bottom-2 left-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
         <span
-          class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+          [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+          class="absolute -bottom-2 right-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
       </a>
       <a class="relative group px-1" href="#">
         <span>LEARN MORE</span>
         <span
-          class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+          [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+          class="absolute -bottom-2 left-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
         <span
-          class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+          [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+          class="absolute -bottom-2 right-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
       </a>
     </ul>
     <div class="flex w-3/12 justify-end">
@@ -36,9 +42,11 @@
         <button class="relative group px-1" (click)="openLoginModal()">
           <span>LOGIN</span>
           <span
-            class="absolute bottom-1 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+            [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+            class="absolute bottom-1 left-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
           <span
-            class="absolute bottom-1 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+            [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+            class="absolute bottom-1 right-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
         </button>
         <button class="bg-main py-2 px-4" (click)="openSignUpModal()">
           SIGN UP
@@ -46,22 +54,28 @@
       </div>
       <ng-template #isLoggedIn>
         <div class="flex flex-row space-x-12">
-          <button class="relative group flex flex-row items-center" routerLink="/wishlist">
+          <a class="relative group flex flex-row items-center" routerLink="/wishlist">
             <heart-solid-icon class="pr-1 scale-75"></heart-solid-icon>
             <span>
               WISHLIST
             </span>
             <span
-              class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+              [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+              class="absolute -bottom-2 left-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
             <span
-              class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
-          </button>
-          <div class="relative" data-te-dropdown-ref>
+              [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+              class="absolute -bottom-2 right-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+          </a>
+          <div
+            class="relative"
+            data-te-dropdown-ref
+            (click)="toggleAccountDropdown()"
+            (mouseenter)="openAccountDropdown()"
+            (mouseleave)="closeAccountDropdown()"
+          >
             <button
               class="flex items-center group"
               type="button"
-              (click)="toggleAccountDropdown()"
-              (mouseenter)="openAccountDropdown()"
               id="accountDropdown"
               data-te-dropdown-toggle-ref
               aria-expanded="false"
@@ -72,9 +86,11 @@
                 ACCOUNT
               </span>
               <span
-                class="absolute -bottom-2 left-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
+                [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+                class="absolute -bottom-2 left-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-r-xl"></span>
               <span
-                class="absolute -bottom-2 right-1/2 w-0 h-1 bg-main group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
+                [ngClass]="{'bg-main': isMainPage, 'bg-light-bg': !isMainPage}"
+                class="absolute -bottom-2 right-1/2 w-0 h-1 group-hover:w-1/2 group-hover:transition-all rounded-l-xl"></span>
               <span class="ml-2 w-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -92,26 +108,17 @@
               class="fixed z-[1000] float-left mt-1 m-0 min-w-max list-none rounded-lg border-none bg-white bg-clip-padding
                text-left text-base shadow-lg dark:bg-neutral-700 transform transition-opacity ease-in-out duration-300"
               [ngClass]="isAccountDropdownOpen ? 'opacity-100' : 'opacity-0'"
-              (mouseleave)="closeAccountDropdown()"
               aria-labelledby="accountDropdown"
               data-te-dropdown-menu-ref>
               <li>
-                <button
+                <a
                   class="block w-full whitespace-nowrap bg-transparent px-4 py-2 rounded-t-lg text-sm text-left font-playfair font-semibold text-dark hover:bg-neutral-300
                    active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400"
                   data-te-dropdown-item-ref
+                  routerLink="/saved-recommendations"
                 >
                   Recommendations
-                </button>
-              </li>
-              <li>
-                <button
-                  class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-playfair text-left font-semibold text-dark hover:bg-neutral-300
-                   active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400"
-                  data-te-dropdown-item-ref
-                >
-                  Saved wines
-                </button>
+                </a>
               </li>
               <li>
                 <button
