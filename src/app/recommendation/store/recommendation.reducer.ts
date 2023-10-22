@@ -9,6 +9,7 @@ export interface RecommendationFormState {
   recommendedWines: Wine[];
   isCurrentRecommendationSaved: boolean;
   savedRecommendations: SavedRecommendationsRes[];
+  winesSelectOptions: Wine[];
 }
 
 const initialState: RecommendationFormState = {
@@ -18,6 +19,7 @@ const initialState: RecommendationFormState = {
   recommendedWines: [],
   isCurrentRecommendationSaved: false,
   savedRecommendations: [],
+  winesSelectOptions: [],
 };
 
 export function recommendationReducer(
@@ -30,6 +32,11 @@ export function recommendationReducer(
         ...state,
         recommendedWines: [...action.payload],
         isCurrentRecommendationSaved: false
+      };
+    case RecommendationFormActions.SET_WINES_SELECT:
+      return {
+        ...state,
+        winesSelectOptions: [...action.payload]
       };
     case RecommendationFormActions.CLEAR_RECOMMENDATIONS:
       return {

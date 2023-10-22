@@ -111,56 +111,60 @@
             <div class="py-2 space-y-6">
               <div class="w-full flex flex-row justify-between items-center">
                 <span class="w-2/6 h-[0.5px] bg-gray-300"></span>
-                <h3 class="font-playfair text-lg font-semibold w-2/6 text-center">Price &nbsp;&&nbsp; Winery &nbsp;&&nbsp;
-                  Variety</h3>
+                <h3 class="font-playfair text-lg font-semibold w-2/6 text-center">Pick your wine (winery, variety)</h3>
                 <span class="w-2/6 h-[0.5px] bg-gray-300"></span>
               </div>
-              <div class="flex flex-row justify-between items-center px-6 font-cormorant text-xl text-black font-bold">
-                <div class="relative" data-te-input-wrapper-init>
-                  <input
-                    type="number"
-                    class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15]
-                     outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary
-                      data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200
-                       dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                    id="maxPriceInput"
-                    formControlName="maxPrice"
-                  />
-                  <label
-                    for="maxPriceInput"
-                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem]
-                     leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem]
-                     peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem]
-                     peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-                  >Maximum Price
-                  </label>
-                </div>
-                <div>
+              <div class="flex flex-row justify-center items-center px-6 font-cormorant text-xl text-black font-bold">
+                <!--                <div class="relative" data-te-input-wrapper-init>-->
+                <!--                  <input-->
+                <!--                    type="number"-->
+                <!--                    class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15]-->
+                <!--                     outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary-->
+                <!--                      data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200-->
+                <!--                       dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"-->
+                <!--                    id="maxPriceInput"-->
+                <!--                    formControlName="maxPrice"-->
+                <!--                  />-->
+                <!--                  <label-->
+                <!--                    for="maxPriceInput"-->
+                <!--                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem]-->
+                <!--                     leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem]-->
+                <!--                     peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem]-->
+                <!--                     peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"-->
+                <!--                  >Maximum Price-->
+                <!--                  </label>-->
+                <!--                </div>-->
+                <div class="w-1/2">
                   <select
                     data-te-select-init
-                    multiple
                     data-te-select-size="lg"
                     data-te-select-filter="true"
-                    formControlName="winery"
-                    id="winerySelect"
+                    data-te-select-placeholder="Select wine"
+                    formControlName="mainWine"
+                    id="wineSelect"
                   >
-                    <option *ngFor="let winery of filteredWinery" [value]="winery">{{ winery }}</option>
+                    <option
+                      *ngFor="let wine of wines"
+                      [value]="wine.id"
+                    >
+                      {{ wine.winery }}, {{ wine.variety }} - {{ wine.country }}, {{ wine.wineColor }}
+                    </option>
                   </select>
-                  <label class="text-xl" data-te-select-label-ref>Winery</label>
+                  <label class="text-xl" data-te-select-label-ref>Your Wine</label>
                 </div>
-                <div>
-                  <select
-                    data-te-select-init
-                    multiple
-                    data-te-select-size="lg"
-                    data-te-select-filter="true"
-                    formControlName="variety"
-                    id="varietySelect"
-                  >
-                    <option *ngFor="let variety of filteredVariety" [value]="variety">{{ variety }}</option>
-                  </select>
-                  <label data-te-select-label-ref>Variety</label>
-                </div>
+                <!--                <div>-->
+                <!--                  <select-->
+                <!--                    data-te-select-init-->
+                <!--                    multiple-->
+                <!--                    data-te-select-size="lg"-->
+                <!--                    data-te-select-filter="true"-->
+                <!--                    formControlName="variety"-->
+                <!--                    id="varietySelect"-->
+                <!--                  >-->
+                <!--                    <option *ngFor="let variety of filteredVariety" [value]="variety">{{ variety }}</option>-->
+                <!--                  </select>-->
+                <!--                  <label data-te-select-label-ref>Variety</label>-->
+                <!--                </div>-->
               </div>
             </div>
           </div>

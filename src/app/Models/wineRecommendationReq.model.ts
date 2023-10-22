@@ -6,4 +6,5 @@ export class WineRecommendationReq {
   public price: number;
   public points: number;
   public province: string;
+  public pickedWineId: number;
 }

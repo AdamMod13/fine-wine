@@ -14,7 +14,6 @@ export const getUserSavedRecommendationsResolver: ResolveFn<Wine[]> = (route: Ac
     tap(() => {
       store.select("auth").pipe().subscribe((auth) => {
         if (auth.user) {
-          console.log(auth)
           store.dispatch(new RecommendationFormActions.GetSavedRecommendations(auth.user.id))
         }
       })

@@ -8,6 +8,7 @@ export interface FindWineState {
   varieties: string[];
   wineries: string[];
   wines: Wine[];
+  nothingFound: boolean;
 }
 
 const initialState: FindWineState = {
@@ -16,6 +17,7 @@ const initialState: FindWineState = {
   varieties: [],
   wineries: [],
   wines: [],
+  nothingFound: false,
 };
 
 export function findWineReducer(
@@ -26,7 +28,6 @@ export function findWineReducer(
     case FindWineActions.SET_WINE_PAGE:
       if (action.payload.winePage) {
         let newWines = [...state.wines, ...action.payload.winePage.content]
-        console.log(state.currentPageNumber)
         if (state.currentPageNumber == 0) {
           return {
             ...state,

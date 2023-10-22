@@ -1,5 +1,6 @@
-<div *ngIf="isErrorModalVisible"
-     class="fixed flex justify-center space-x-3 items-center rounded-lg bottom-10 right-10 z-[100] bg-error shadow-2xl w-[20rem] p-6 h-auto font-bold text-light-bg text-xl font-cormorant">
+<div *ngIf="errorService.isErrorModalVisible"
+     class="fixed flex justify-center space-x-3 items-center rounded-lg bottom-10 right-10 z-[100] bg-red-800 bg-opacity-90
+     shadow-2xl w-[20rem] p-6 gap-3 h-auto font-bold text-light-bg text-xl font-cormorant">
   <information-circle-solid-icon></information-circle-solid-icon>
-  {{ errorMessage }}
+  {{ errorService.errorMessage }}
 </div>

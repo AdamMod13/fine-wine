@@ -24,7 +24,6 @@ export class SavedRecommendationsComponent implements OnInit {
       .subscribe((recommendation) => {
         if (recommendation.savedRecommendations.length !== 0) {
           this.savedRecommendations = [...recommendation.savedRecommendations];
-          console.log(this.savedRecommendations)
         }
       })
   }

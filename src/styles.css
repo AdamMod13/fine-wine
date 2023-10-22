@@ -66,6 +66,7 @@ div[data-te-select-form-outline-ref] span {
 }
 
 ::-webkit-scrollbar {
+  height: 8px;
   width: 10px;
 }
 
@@ -78,7 +79,7 @@ div[data-te-select-form-outline-ref] span {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #5C001E;
-  /*border-radius: 5px;*/
+  border-radius: 5px;
 }
 
 /* Handle on hover */

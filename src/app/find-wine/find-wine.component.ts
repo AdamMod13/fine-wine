@@ -14,6 +14,7 @@ import {WinePage} from "../Models/winePage.model";
 import * as WishlistActions from "../wishlist/store/wishlist.action";
 import {User} from "../auth/user.model";
 import {WishlistService} from "../wishlist/wishlist.service";
+import {ErrorModalService} from "../Shared/error-modal/error-modal.service";
 
 @Component({
   selector: 'app-find-wine',
@@ -30,7 +31,6 @@ export class FindWineComponent implements OnInit, OnDestroy {
 
   public pickedColors: string[] = [];
   public pickedCountries: string[] = [];
-  public pickedProvinces: string[] = [];
   public pickedVarieties: string[] = [];
   public pickedWineries: string[] = [];
 
@@ -57,7 +57,9 @@ export class FindWineComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<fromApp.AppState>,
     private spinnerService: SpinnerService,
-    public wishlistService: WishlistService) {
+    public wishlistService: WishlistService,
+    public errorService: ErrorModalService
+  ) {
   }
 
   ngOnInit() {
@@ -71,7 +73,14 @@ export class FindWineComponent implements OnInit, OnDestroy {
       .pipe(map((findWinePageState) => findWinePageState))
       .subscribe((findWineState) => {
         this.winePageRes = findWineState.winePage;
-        this.wines = findWineState.wines;
+        if (findWineState.wines.length === 0) {
+          if (findWineState.winePage) {
+            this.errorService.open('For selected filters there is no wines.');
+          }
+          this.store.dispatch(new FindWineActions.FetchWinePage({pageNumber: 0, findWineReq: new FindWineReq()}));
+        } else {
+          this.wines = findWineState.wines;
+        }
         this.basicVarieties = findWineState.varieties;
         this.basicWineries = findWineState.wineries;
       })
@@ -145,11 +154,11 @@ export class FindWineComponent implements OnInit, OnDestroy {
   }
 
   clearFilterForm() {
-    this.pickedProvinces = [];
+    this.pickedWineries = [];
     this.pickedVarieties = [];
     this.pickedColors = [];
     this.pickedCountries = [];
-    this.filterForm.reset();
+    this.filterForm.reset({countries: [], wineries: [], varieties: [], wineColors: []});
   }
 
   loadMore() {
@@ -158,10 +167,6 @@ export class FindWineComponent implements OnInit, OnDestroy {
       pageNumber: this.pageNumber,
       findWineReq: this.filterForm.value as FindWineReq
     }));
-  }
-
-  addToFavourites(wine: Wine) {
-    this.store.dispatch(new WishlistActions.AddWineToFavourites({userId: this.user.id, wine: wine}));
   }
 
   ngOnDestroy() {

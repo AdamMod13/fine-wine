@@ -1,5 +1,5 @@
 <div class="absolute top-0 left-0 w-full bg-light-bg z-0"></div>
-<div *ngIf="wines.length !== 0" class="w-full flex justify-center">
+<div class="w-full flex justify-center">
   <div class="flex flex-row justify-center max-w-screen-2xl">
     <div class="w-[30%] relative mx-24 my-16 flex flex-row">
       <div class="w-[30rem] fixed h-[80%] overflow-y-auto flex flex-col gap-y-10">
@@ -86,8 +86,8 @@
           </div>
           <div class="flex flex-row flex-wrap pt-2 px-4 w-full">
             <div *ngFor="let winery of basicWineries"
-                 (click)="selectWinery(winery.toLowerCase())"
-                 [ngClass]="pickedWineries.includes(winery.toLowerCase()) ? 'bg-white' : 'bg-light-bg scale-95'"
+                 (click)="selectWinery(winery)"
+                 [ngClass]="pickedWineries.includes(winery) ? 'bg-white' : 'bg-light-bg scale-95'"
                  class="px-4 py-2 mr-2 my-2 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-[1.01] hover:shadow-lg
                    transition duration-300 cursor-pointer active:scale-90 active:bg-white">
               <div>
@@ -108,8 +108,8 @@
           </div>
           <div class="flex flex-row flex-wrap pt-2 px-4 w-full">
             <div *ngFor="let variety of basicVarieties"
-                 (click)="selectVariety(variety.toLowerCase())"
-                 [ngClass]="pickedVarieties.includes(variety.toLowerCase()) ? 'bg-white' : 'bg-light-bg scale-95'"
+                 (click)="selectVariety(variety)"
+                 [ngClass]="pickedVarieties.includes(variety) ? 'bg-white' : 'bg-light-bg scale-95'"
                  class="px-4 py-2 mr-2 my-2 border-[1px] border-gray-300 shadow-lg rounded-full hover:scale-[1.01] hover:shadow-lg
                    transition duration-300 cursor-pointer active:scale-90 active:bg-white">
               <div>
@@ -141,7 +141,7 @@
       </div>
     </div>
     <div class="w-[70%] mx-24 my-16 flex flex-row">
-      <div class="flex flex-col justify-center items-center gap-4">
+      <div *ngIf="wines.length !== 0;else noWines" class="flex flex-col justify-center items-center gap-4">
         <div *ngFor="let wine of wines; let i = index"
              class="w-full flex min-h-[18rem] flex-row rounded-lg shadow-lg hover:shadow-2xl border-gray-300 border-solid border-2
            transition-all duration-300 ease-in-out hover:scale-[1.01] relative">
@@ -205,6 +205,11 @@
           </button>
         </div>
       </div>
+      <ng-template #noWines>
+        <h1
+          class="flex flex-col justify-center items-center gap-4 w-[70rem] text-center text-2xl font-playfair px-4 font-bold">
+          No records found</h1>
+      </ng-template>
     </div>
   </div>
 </div>

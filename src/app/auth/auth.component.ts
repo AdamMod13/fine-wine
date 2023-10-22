@@ -1,19 +1,17 @@
-import {Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../store/app.reducer';
 import * as AuthActions from './store/auth.actions';
-import {ErrorModalComponent} from "../Shared/error-modal/error-modal.component";
 import {SpinnerService} from "../Shared/spinner/spinner.service";
+import {ErrorModalService} from "../Shared/error-modal/error-modal.service";
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html'
 })
 export class AuthComponent implements OnInit, OnDestroy {
-  @ViewChild(ErrorModalComponent) private errorModal: ErrorModalComponent;
-
   private closeSub: Subscription;
   private storeSub: Subscription;
 
@@ -37,6 +35,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     private componentFactoryResolver: ComponentFactoryResolver,
     private store: Store<fromApp.AppState>,
     private spinnerService: SpinnerService,
+    public errorService: ErrorModalService
   ) {
   }
 
@@ -44,7 +43,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.storeSub = this.store.select('auth').subscribe(authState => {
       this.error = authState.authError;
       if (this.error) {
-        this.errorModal.open(this.error);
+        this.errorService.open(this.error);
       }
       if (authState.user) {
         this.closeModals();

@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {ErrorModalService} from "./error-modal.service";
 
 @Component({
   selector: 'app-error-modal',
@@ -6,14 +7,6 @@ import {Component} from '@angular/core';
   styleUrls: ['./error-modal.component.css']
 })
 export class ErrorModalComponent {
-  public errorMessage: string = '';
-  public isErrorModalVisible: boolean = false;
-
-  open(error: string) {
-    this.errorMessage = error;
-    this.isErrorModalVisible = true;
-    setTimeout(() => {
-      this.isErrorModalVisible = false
-    }, 5000)
+  constructor(public errorService: ErrorModalService) {
   }
 }

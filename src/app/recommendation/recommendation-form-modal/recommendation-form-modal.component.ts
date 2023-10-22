@@ -6,8 +6,9 @@ import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import * as RecommendationFormActions from "../store/recommendation.action";
 import {WineRecommendationReq} from "../../Models/wineRecommendationReq.model";
-import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
+import {Wine} from "../../Models/wine.model";
+import {FindWineReq} from "../../Models/findWineReq.model";
 
 @Component({
   selector: 'app-recommendation-form-modal',
@@ -20,15 +21,10 @@ export class RecommendationFormModalComponent implements OnDestroy {
   public wineColorEnum = [WineColorEnum.RED, WineColorEnum.WHITE, WineColorEnum.ROSE, WineColorEnum.SPARKLING];
   public mainCoutriesEnum = MainCoutriesEnum;
   public otherCountriesEnum = OtherCountriesEnum;
-  public basicWineryFilter: string[] = [];
-  public basicVarietyFilter: string[] = [];
-  public isFirstData: boolean = true;
-  public filteredWinery: string[] = [];
-  public filteredVariety: string[] = [];
-  public isOpenedFirst: boolean = true;
+  public wines: Wine[] = [];
+  public filterWineReq: FindWineReq = new FindWineReq();
 
-  public varietySearch: string;
-  public winerySearch: string;
+  public wineSearch: string;
 
   public showRecommendationModal: boolean = false;
   public isMorePicked: boolean = false;
@@ -41,8 +37,7 @@ export class RecommendationFormModalComponent implements OnDestroy {
     wineColors: new FormControl<string[]>([]),
     maxPrice: new FormControl<number | null>(null),
     countries: new FormControl<string[]>([]),
-    variety: new FormControl<string>(''),
-    winery: new FormControl<string>(''),
+    mainWine: new FormControl<number | null>(null),
     points: new FormControl<number>(85)
   });
 
@@ -51,79 +46,29 @@ export class RecommendationFormModalComponent implements OnDestroy {
 
   initRecommendationForm(): void {
     this.initSelectListeners();
-    this.store.dispatch(new RecommendationFormActions.GetRecommendationModalFilters())
+    this.store.dispatch(new RecommendationFormActions.GetWinesSelectOptions(new FindWineReq()))
     this.showRecommendationModal = true;
     this.subscription = this.store
       .select('recommendation')
-      .pipe(map((recommendationModal) => recommendationModal))
+      .pipe()
       .subscribe((recommendationModalState) => {
-        if (
-          this.isFirstData
-          && recommendationModalState.wineriesFilter.length !== 0
-          && recommendationModalState.varietiesFilter.length !== 0
-        ) {
-          this.basicVarietyFilter = recommendationModalState?.varietiesFilter;
-          this.basicWineryFilter = recommendationModalState?.wineriesFilter;
-          this.isFirstData = false;
-        }
-        if (this.varietySearch && this.varietySearch === '' && recommendationModalState.filterType === "VARIETY") {
-          this.filteredVariety = [...this.basicVarietyFilter];
-          return;
-        }
-        if (this.winerySearch === '' || !this.winerySearch && recommendationModalState.filterType === "WINERY") {
-          this.filteredWinery = [...this.basicWineryFilter];
-          return;
-        }
-        this.filteredVariety = recommendationModalState?.varietiesFilter;
-        this.filteredWinery = recommendationModalState?.wineriesFilter;
-      })
+        this.wines = [...recommendationModalState.winesSelectOptions];
+        this.wineSearch = '';
+      });
   }
 
   initSelectListeners() {
-    const varietySelect = document.getElementById('varietySelect');
-    if (varietySelect) {
-      varietySelect.addEventListener('open.te.select', () => {
+    const wineSelectElement = document.getElementById('wineSelect');
+    if (wineSelectElement) {
+      wineSelectElement.addEventListener('open.te.select', () => {
         setTimeout(() => {
-          let varietySelect = document.querySelectorAll(
-            'input[data-te-select-input-filter-ref]')[this.isOpenedFirst ? 0 : 1] as HTMLInputElement;
-          varietySelect.addEventListener('input', () => {
-            this.varietySearch = varietySelect.value;
-            this.store.dispatch(new RecommendationFormActions.SearchWineryOrVariety({
-              value: varietySelect.value,
-              type: "VARIETY"
-            }));
-            if (this.isOpenedFirst) {
-              this.isOpenedFirst = false
-            }
+          let wineSelect = document.querySelectorAll(
+            'input[data-te-select-input-filter-ref]')[0] as HTMLInputElement;
+          wineSelect.addEventListener('input', () => {
+            this.wineSearch = wineSelect.value;
+            this.sendWineFilterReq();
           })
         }, 100)
-      });
-      varietySelect.addEventListener('close.te.select', () => {
-        this.filteredVariety = [...this.basicVarietyFilter];
-        this.isOpenedFirst = true;
-      })
-    }
-    const winerySelect = document.getElementById('winerySelect');
-    if (winerySelect) {
-      winerySelect.addEventListener('open.te.select', () => {
-        setTimeout(() => {
-          let winerySelect = document.querySelectorAll(
-            'input[data-te-select-input-filter-ref]')[this.isOpenedFirst ? 0 : 1] as HTMLInputElement;
-          winerySelect.addEventListener('input', () => {
-            this.winerySearch = winerySelect.value;
-            this.store.dispatch(new RecommendationFormActions.SearchWineryOrVariety({
-              value: winerySelect.value,
-              type: "WINERY"
-            }));
-            if (this.isOpenedFirst) {
-              this.isOpenedFirst = false
-            }
-          })
-        }, 100)
-      });
-      winerySelect.addEventListener('close.te.select', () => {
-        this.filteredWinery = [...this.basicWineryFilter];
-        this.isOpenedFirst = true;
       });
     }
   }
@@ -132,20 +77,38 @@ export class RecommendationFormModalComponent implements OnDestroy {
     if (this.pickedColors.includes(wineColor)) {
       this.pickedColors.splice(this.pickedColors.indexOf(wineColor), 1);
       this.recommendationForm.controls.wineColors.setValue([...this.pickedColors]);
+      this.sendWineFilterReq();
       return;
     }
     this.recommendationForm.controls['wineColors'].setValue([...this.pickedColors, wineColor]);
     this.pickedColors = [...this.pickedColors, wineColor];
+    this.sendWineFilterReq();
   }
 
   selectCountry(wineCountry: string): void {
     if (this.pickedCountry.includes(wineCountry)) {
       this.pickedCountry.splice(this.pickedCountry.indexOf(wineCountry), 1);
       this.recommendationForm.controls['countries'].setValue([...this.pickedCountry]);
+      this.sendWineFilterReq();
       return;
     }
     this.recommendationForm.controls['countries'].setValue([...this.pickedCountry, wineCountry]);
     this.pickedCountry = [...this.pickedCountry, wineCountry];
+    this.sendWineFilterReq();
+  }
+
+  sendWineFilterReq() {
+    this.filterWineReq = {
+      ...this.filterWineReq,
+      countries: [
+        ...this.pickedCountry.map(country => {
+          return (country.charAt(0).toUpperCase() + country.slice(1))
+        })
+      ],
+      winerySearchString: this.wineSearch,
+      wineColors: [...this.pickedColors],
+    }
+    this.store.dispatch(new RecommendationFormActions.GetWinesSelectOptions(this.filterWineReq));
   }
 
   onMorePicked() {
@@ -161,7 +124,10 @@ export class RecommendationFormModalComponent implements OnDestroy {
     setTimeout(() => {
       this.showRecommendationModal = false;
     }, 1000)
-    this.store.dispatch(new RecommendationFormActions.FetchRecommendations(recommendationReq));
+    if (this.recommendationForm.controls.mainWine.value) {
+      recommendationReq.pickedWineId = this.recommendationForm.controls.mainWine.value;
+      this.store.dispatch(new RecommendationFormActions.FetchRecommendations(recommendationReq));
+    }
     this.resetRecommendationForm();
   }
 

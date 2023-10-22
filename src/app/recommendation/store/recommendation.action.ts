@@ -3,6 +3,7 @@ import {Wine} from "../../Models/wine.model";
 import {WineRecommendationReq} from "../../Models/wineRecommendationReq.model";
 import {RecommendationModalFiltersRes} from "../../Models/recommendationModalFiltersRes.model";
 import {SavedRecommendationsRes} from "../../Models/savedRecommendationsRes.model";
+import {FindWineReq} from "../../Models/findWineReq.model";
 
 export const FETCH_RECOMMENDATIONS = '[Recommendation Form] Fetch recommendations';
 export const SET_RECOMMENDATIONS = '[Recommendation Form] Set recommendations';
@@ -16,6 +17,8 @@ export const SET_WINERY_OR_VARIETY = '[Recommendation Form] Set winery or variet
 export const SAVE_RECOMMENDATION = '[Saved Recommendation] Save recommendation';
 export const GET_SAVED_RECOMMENDATIONS = '[Saved Recommendation] Get saved recommendations';
 export const SET_SAVED_RECOMMENDATIONS = '[Saved Recommendation] Set saved recommendations';
+export const GET_WINES_SELECT_OPTIONS = '[Recommendation Form] Get wines select options';
+export const SET_WINES_SELECT = '[Recommendation Form] Set wines select';
 
 export class FetchRecommendations implements Action {
   readonly type = FETCH_RECOMMENDATIONS;
@@ -100,6 +103,20 @@ export class ClearRecommendations implements Action {
   readonly type = CLEAR_RECOMMENDATIONS;
 }
 
+export class GetWinesSelectOptions implements Action {
+  readonly type = GET_WINES_SELECT_OPTIONS;
+
+  constructor(public payload: FindWineReq) {
+  }
+}
+
+export class SetWinesSelect implements Action {
+  readonly type = SET_WINES_SELECT;
+
+  constructor(public payload: Wine[]) {
+  }
+}
+
 export type RecommendationFormActions =
   | FetchRecommendations
   | ClearRecommendations
@@ -112,4 +129,6 @@ export type RecommendationFormActions =
   | SetWineryOrVariety
   | SaveRecommendation
   | GetSavedRecommendations
-  | SetSavedRecommendations;
+  | SetSavedRecommendations
+  | GetWinesSelectOptions
+  | SetWinesSelect;

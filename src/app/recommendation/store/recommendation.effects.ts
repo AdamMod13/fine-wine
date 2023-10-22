@@ -158,6 +158,31 @@ export class RecommendationEffects {
     }
   );
 
+  getWinesSelectOptions = createEffect(() =>
+    this.actions$.pipe(
+      debounceTime(500),
+      ofType(RecommendationFormActions.GET_WINES_SELECT_OPTIONS),
+      switchMap((findWineReq: RecommendationFormActions.GetWinesSelectOptions) => {
+        return this.http.post<Wine[]>(
+          `http://localhost:8080/api/wine/get-wine-by-filters`,
+          findWineReq.payload
+        ).pipe(
+          map((res) => {
+            return new RecommendationFormActions.SetWinesSelect(res);
+          }),
+          catchError(() => {
+            const errorMessage = 'An error occurred while fetching wines.';
+            this.spinnerService.setLoading(false);
+            return throwError(errorMessage);
+          }),
+        );
+      }),
+      tap(() =>
+        this.spinnerService.setLoading(false)
+      )
+    )
+  );
+
   constructor(private actions$: Actions, private http: HttpClient, private router: Router, private spinnerService: SpinnerService) {
   }
 }
