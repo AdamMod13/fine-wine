@@ -12,6 +12,7 @@ import {AuthService} from '../auth.service';
 import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import * as WishlistAction from "../../wishlist/store/wishlist.action";
+import {SpinnerService} from "../../Shared/spinner/spinner.service";
 
 export interface AuthResponseData {
   kind: string;
@@ -84,6 +85,7 @@ export class AuthEffects {
               this.authService.setLogoutTimer(+resData.expiresIn * 1000);
             }),
             map(resData => {
+              this.spinnerService.setLoading(false);
               return handleAuthentication(
                 +resData.expiresIn,
                 resData.email,
@@ -92,6 +94,7 @@ export class AuthEffects {
               );
             }),
             catchError(errorRes => {
+              this.spinnerService.setLoading(false);
               return handleError(errorRes);
             })
           );
@@ -200,7 +203,8 @@ export class AuthEffects {
     private http: HttpClient,
     private router: Router,
     private authService: AuthService,
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.AppState>,
+    private spinnerService: SpinnerService
   ) {
   }
 }
