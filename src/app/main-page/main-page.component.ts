@@ -9,6 +9,7 @@ import {SpinnerService} from "../Shared/spinner/spinner.service";
 import {User} from "../auth/user.model";
 import * as WishlistActions from "../wishlist/store/wishlist.action";
 import {WishlistService} from "../wishlist/wishlist.service";
+import {WineColorRecord} from "../enums/wine-color-record";
 
 @Component({
   selector: 'app-main-page',
@@ -16,17 +17,18 @@ import {WishlistService} from "../wishlist/wishlist.service";
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit, OnDestroy {
-  public bestRandomWines: Wine[] = [];
   private mainPageSubscription: Subscription;
   private authSubscription: Subscription;
+
+  public bestRandomWines: Wine[] = [];
+  public wineColorRecord: Record<string, string> = WineColorRecord;
   public user: User;
 
   constructor(
     private store: Store<fromApp.AppState>,
     private spinnerService: SpinnerService,
     public wishlistService: WishlistService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.spinnerService.setLoading(true);

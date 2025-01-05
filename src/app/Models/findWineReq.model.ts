@@ -4,7 +4,7 @@ export class FindWineReq {
   public wineries: string[];
   public countries: string[];
   public price: number;
-  public points: number;
+  public rating: number;
   public provinces: string[];
   public winerySearchString: string;
 }

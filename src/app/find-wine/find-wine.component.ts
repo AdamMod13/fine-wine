@@ -7,13 +7,14 @@ import {SpinnerService} from "../Shared/spinner/spinner.service";
 import {Subscription} from "rxjs";
 import {Wine} from "../Models/wine.model";
 import {MainCoutriesEnum, OtherCountriesEnum} from "../enums/coutries-enum";
-import {WineColorEnum} from "../enums/wine-color-enum";
 import {FormControl, FormGroup} from "@angular/forms";
 import {FindWineReq} from "../Models/findWineReq.model";
 import {WinePage} from "../Models/winePage.model";
 import * as WishlistActions from "../wishlist/store/wishlist.action";
 import {User} from "../auth/user.model";
 import {WishlistService} from "../wishlist/wishlist.service";
+import {WineColorEnum} from "../enums/wine-color-enum";
+import {WineColorRecord} from "../enums/wine-color-record";
 import {ErrorModalService} from "../Shared/error-modal/error-modal.service";
 
 @Component({
@@ -23,6 +24,7 @@ import {ErrorModalService} from "../Shared/error-modal/error-modal.service";
 })
 export class FindWineComponent implements OnInit, OnDestroy {
 
+  public wineColorRecord: Record<string, string> = WineColorRecord;
   public wineColorEnum = [WineColorEnum.RED, WineColorEnum.WHITE, WineColorEnum.ROSE, WineColorEnum.SPARKLING];
   public mainCoutriesEnum = MainCoutriesEnum;
   public otherCountriesEnum = OtherCountriesEnum;
@@ -50,7 +52,7 @@ export class FindWineComponent implements OnInit, OnDestroy {
     varieties: new FormControl<string[]>([]),
     wineries: new FormControl<string[]>([]),
     price: new FormControl(),
-    points: new FormControl(),
+    rating: new FormControl(3),
     sortOrder: new FormControl(''),
   })
 
@@ -59,8 +61,7 @@ export class FindWineComponent implements OnInit, OnDestroy {
     private spinnerService: SpinnerService,
     public wishlistService: WishlistService,
     public errorService: ErrorModalService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.spinnerService.setLoading(true);

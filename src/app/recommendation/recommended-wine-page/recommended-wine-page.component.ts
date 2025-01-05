@@ -9,6 +9,7 @@ import * as WishlistActions from "../../wishlist/store/wishlist.action";
 import * as RecommendationPageActions from "../store/recommendation.action";
 import {SpinnerService} from "../../Shared/spinner/spinner.service";
 import {WishlistService} from "../../wishlist/wishlist.service";
+import {WineColorRecord} from "../../enums/wine-color-record";
 
 @Component({
   selector: 'app-recommended-wine-page',
@@ -16,6 +17,7 @@ import {WishlistService} from "../../wishlist/wishlist.service";
   styleUrls: ['./recommended-wine-page.component.css']
 })
 export class RecommendedWinePageComponent implements OnInit, OnDestroy {
+  public wineColorRecord: Record<string, string> = WineColorRecord;
   public recommendedWines: Wine[] = [];
   private subscription: Subscription;
   private authSubscription: Subscription;

@@ -147,7 +147,7 @@
                       *ngFor="let wine of wines"
                       [value]="wine.id"
                     >
-                      {{ wine.winery }}, {{ wine.variety }} - {{ wine.country }}, {{ wine.wineColor }}
+                      {{ wine.winery }}, {{ wine.variety }} - {{ wine.country }}, {{ wineColorRecord[wine.wineColor] }}
                     </option>
                   </select>
                   <label class="text-xl" data-te-select-label-ref>Your Wine</label>

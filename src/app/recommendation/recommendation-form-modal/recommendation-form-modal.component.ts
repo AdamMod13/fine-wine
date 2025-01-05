@@ -9,6 +9,7 @@ import {WineRecommendationReq} from "../../Models/wineRecommendationReq.model";
 import {Subscription} from "rxjs";
 import {Wine} from "../../Models/wine.model";
 import {FindWineReq} from "../../Models/findWineReq.model";
+import {mapColorsToCodes, WineColorRecord} from "../../enums/wine-color-record";
 
 @Component({
   selector: 'app-recommendation-form-modal',
@@ -18,6 +19,7 @@ import {FindWineReq} from "../../Models/findWineReq.model";
 export class RecommendationFormModalComponent implements OnDestroy {
   @ViewChild('rf') private recommendationFormDirective: NgForm;
 
+  public wineColorRecord: Record<string, string> = WineColorRecord;
   public wineColorEnum = [WineColorEnum.RED, WineColorEnum.WHITE, WineColorEnum.ROSE, WineColorEnum.SPARKLING];
   public mainCoutriesEnum = MainCoutriesEnum;
   public otherCountriesEnum = OtherCountriesEnum;
@@ -38,7 +40,7 @@ export class RecommendationFormModalComponent implements OnDestroy {
     maxPrice: new FormControl<number | null>(null),
     countries: new FormControl<string[]>([]),
     mainWine: new FormControl<number | null>(null),
-    points: new FormControl<number>(85)
+    rating: new FormControl<number>(3)
   });
 
   constructor(private store: Store<fromApp.AppState>) {
@@ -98,6 +100,8 @@ export class RecommendationFormModalComponent implements OnDestroy {
   }
 
   sendWineFilterReq() {
+    const pickedColorsCodes: string[] = this.pickedColors.map((color: string) => mapColorsToCodes(color));
+    console.log(pickedColorsCodes);
     this.filterWineReq = {
       ...this.filterWineReq,
       countries: [
@@ -106,7 +110,7 @@ export class RecommendationFormModalComponent implements OnDestroy {
         })
       ],
       winerySearchString: this.wineSearch,
-      wineColors: [...this.pickedColors],
+      wineColors: [...pickedColorsCodes],
     }
     this.store.dispatch(new RecommendationFormActions.GetWinesSelectOptions(this.filterWineReq));
   }
@@ -145,7 +149,7 @@ export class RecommendationFormModalComponent implements OnDestroy {
     this.pickedCountry = [];
     this.isMorePicked = false;
 
-    this.recommendationForm.reset({maxPrice: null, points: 85});
+    this.recommendationForm.reset({maxPrice: null, rating: 3});
   }
 
   ngOnDestroy() {

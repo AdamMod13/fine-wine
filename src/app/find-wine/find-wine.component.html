@@ -1,8 +1,8 @@
 <div class="absolute top-0 left-0 w-full bg-light-bg z-0"></div>
 <div class="w-full flex justify-center">
-  <div class="flex flex-row justify-center max-w-screen-2xl">
-    <div class="w-[30%] relative mx-24 my-16 flex flex-row">
-      <div class="w-[30rem] fixed h-[80%] overflow-y-auto flex flex-col gap-y-10">
+  <div class="flex flex-row justify-center max-w-screen-2xl w-full">
+    <div class="w-[25%] relative my-16">
+      <div class="w-[20%] max-w-[25rem] fixed h-[90%] overflow-y-auto flex flex-col gap-y-10">
         <div>
           <div class="flex flex-row justify-between items-center w-full px-3">
             <div class="w-[30%] h-[0.5px] bg-main"></div>
@@ -140,7 +140,7 @@
         </div>
       </div>
     </div>
-    <div class="w-[70%] mx-24 my-16 flex flex-row">
+    <div class="w-[60%] ml-[5%] my-16">
       <div *ngIf="wines.length !== 0;else noWines" class="flex flex-col justify-center items-center gap-4">
         <div *ngFor="let wine of wines; let i = index"
              class="w-full flex min-h-[18rem] flex-row rounded-lg shadow-lg hover:shadow-2xl border-gray-300 border-solid border-2
@@ -163,7 +163,7 @@
                    class="image-cut-shape"/>
             </div>
             <div class="absolute h-full flex justify-center items-center z-10">
-              <img alt="wine_bottle_picture" [src]="'./assets/Images/' + wine.wineColor + '_bottle.png'"/>
+              <img alt="wine_bottle_picture" [src]="'./assets/Images/' + wineColorRecord[wine.wineColor] + '_bottle.png'"/>
             </div>
           </div>
           <div class="w-3/4 flex flex-col items-start py-6 px-12">
@@ -177,7 +177,7 @@
             <span class="flex flex-row gap-x-1">
               <map-pin-solid-icon></map-pin-solid-icon>
               <p>
-                {{ wine.province }}
+                {{ wine.region }}
               </p>
             </span>
               <span *ngIf="wine.price != '0.0'"
@@ -188,7 +188,7 @@
             </span>
               <span class="flex flex-row gap-x-1">
               <star-solid-icon></star-solid-icon>
-              <p>{{ wine.points}}</p>
+              <p>{{ wine.rating}}</p>
             </span>
             </div>
             <div class="overflow-auto mt-2 font-cormorant text-lg font-semibold">
